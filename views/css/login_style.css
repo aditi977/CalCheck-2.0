@@ -1,0 +1,121 @@
+body {
+  height: 100vh;
+}
+body:not(header) {
+  background-color: var(--theme-color);
+}
+header {
+  background-color: white;
+}
+.filler {
+  height: 20vh;
+}
+.form-container {
+  position: relative;
+  width: 300px;
+  height: auto;
+  padding: 20px 30px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 black;
+  margin: auto;
+  position: relative;
+}
+
+input {
+  font-size: 1.3em;
+}
+
+.user-img ion-icon {
+  background-color: white;
+  border-radius: 50%;
+  height: 70px;
+  width: 70px;
+  color: lightsalmon;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translate(-50%);
+  font-weight: 200;
+}
+
+.form-container li {
+  padding: 0px;
+  margin: 0px;
+  border-radius: 0;
+}
+
+.form-container ul {
+  padding: 0px;
+}
+
+ul.list {
+  text-align: center;
+}
+
+ul.list li {
+  width: 100%;
+  padding: 8px 0px;
+  margin-bottom: 10px;
+}
+ul.list li input {
+  width: 100%;
+  text-align: center;
+  border: none;
+  background-color: #d3d3d3;
+  padding: 5px 0px;
+  border-radius: 5px;
+  font-weight: 300;
+}
+
+ul.list li input[type="button"] {
+  background-color: lightsalmon;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+}
+
+ul.list li:nth-child(6) a,
+ul.list li:nth-child(5) label {
+  color: var(--theme-color);
+  white-space: nowrap;
+}
+
+ul.list input[type="checkbox"] {
+  width: 30px;
+  height: auto;
+  margin-left: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+h4 {
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #16a085;
+}
+.auth-form input[type=submit]{
+    background-color: lightsalmon;
+    color:white;
+}
+
+#form-switch {
+  display: none;
+}
+#register-form {
+  display: none;
+}
+#form-switch:checked ~ #register-form {
+  display: block;
+}
+#form-switch:checked ~ #login-form {
+  display: none;
+}
+
+@media screen and (max-width: 500px) {
+  .form-container {
+    width: auto;
+    margin: 0 20px;
+  }
+}

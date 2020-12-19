@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- <meta charset="utf-8"> -->
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width">
+	<title> CalCheck</title>
+	<link rel="stylesheet" href="views/css/global.css" type="text/css">
+	<link rel="stylesheet" href="views/css/styles.css" type="text/css">
+	<link rel="stylesheet" href="views/css/header.css" type="text/css">
+
+</head>
+
+<body>
+	<header>
+		<h1>
+			<a href="index.html">
+				<img class="logo" src="views/img/logo.png"> <span>CalCheck</span>
+			</a>
+		</h1>
+
+		<nav class="nav-menu">
+			<ul>
+
+				<li>
+                    <a href="login.html">
+						<ion-icon name="enter-outline"></ion-icon> Login
+                    </a>
+                </li>
+
+				<li class="dropdown" onclick="dropdown()">
+                    <a href="#">
+						<ion-icon name="notifications-outline"></ion-icon>
+						Notifications
+                    </a>
+                    <span class="badge">3</span>
+					<div class="dropdown-content">
+						<a href="#">Notification 1</a>
+						<a href="#">Notification 2</a>
+						<a href="#">Notification 3</a>
+					</div>
+				</li>
+			</ul>
+
+		</nav>
+	</header>
+
+
+	<div class="search-container theme-background">
+
+		<a href="suggestions.html" class="page-nav left">
+			<span class="nav-desc" style="text-align:left">
+				<img src="views/img/nav-arrow-left.png" style="vertical-align:middle" />
+				<span>Suggestions</span>
+			</span>
+
+		</a>
+
+		<div class="food-search-container">
+			<form id="search-form" action="post-search.html">
+				<input class="search-bar" type="text" placeholder="What did you eat?" required>
+				<button class="search-button" form="search-form" type="submit" value="">
+					<ion-icon name="search-outline"></ion-icon>
+				</button>
+			</form>
+
+		</div>
+
+		<a href="history.html" class="page-nav right">
+			<span class="nav-desc" style="text-align:right">
+				<span>History</span>
+				<img src="views/img/nav-arrow-right.png" style="vertical-align:middle" />
+				<span>
+		</a>
+	</div>
+
+	<div class="full-height center">
+		<div class="content-container">
+			<div id="About-us" style="text-align: left;" data-aos="fade-up" data-aos-duration="1000">
+				<h2>About us</h2>
+				<img src="views/views/img/VT-AboutUs.jpg" style="float:left; margin:10px">
+
+				<p>
+					Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+					Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit
+					amet
+					quam egestas semper.
+					Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien
+					ullamcorper
+					pharetra.
+					Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi.
+					Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus
+					enim ac
+					dui. Donec non enim in turpis pulvinar facilisis.
+					Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna
+					eros eu erat. Aliquam erat volutpat.
+					Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus
+				</p>
+				<p>
+					Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+					Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.
+					Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.
+					Mauris placerat eleifend leo.
+				</p>
+			</div>
+		</div>
+	</div>
+	<script src="load-footer.js"></script>
+	<script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script> AOS.init(); </script>
+	<script src ="global.js"></script>
+</body>
+
+</html>

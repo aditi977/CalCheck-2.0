@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="/css/global.css">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/account-settings.css">
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&display=swap" rel="stylesheet">
+    </head> 
+    <body>
+        <header>
+            <h1>
+                <a href="/">
+                    <img class="logo" src="img/logo.png"> <span>CalCheck</span>
+                </a>
+            </h1>
+
+            <nav class="nav-menu">
+                <ul>
+
+                    <li><a href="/">
+                        <ion-icon name="home-outline"></ion-icon> Home
+                    </a></li>
+                    <li><a href="/suggestions">
+                        <ion-icon name="chatbubble-ellipses-outline"></ion-icon> Suggestions
+                    </a></li>
+                    <li><a href="/logout">
+                            <ion-icon name="enter-outline"></ion-icon> Logout
+                        </a></li>
+                    <li class="dropdown" onclick="dropdown()">
+                        <a href="#">
+                            <ion-icon name="notifications-outline"></ion-icon> Notifications
+                        </a>
+                            <span class="badge">3</span>
+                            <div class="dropdown-content">
+                                <a href="#">Notification 1</a>
+                                <a href="#">Notification 2</a>
+                                <a href="#">Notification 3</a>
+                            </div>
+                    </li>
+            </nav>
+        </header>
+
+        <h2 class="subtitle">Account Settings</h2>
+        <div style="padding: 20px;"></div>
+        <form id="main-form">
+            <label for="first-name">First Name</label>
+            <br>
+            <input type="text" id="first-name" name="first-name">
+            <br>
+            <br>
+            
+            <label for="last-name">Last Name</label>
+            <br>
+            <input type="text" id="last-name" name="last-name">
+            
+            <br>
+            <br>
+            <label for="email">Email</label>
+            <br>
+            <input type="email" id="email" name="email">
+            <br>
+            <br>
+            <label for="pw">Password</label>
+            <br>
+            <div id="pw"><a href="#">Change Password</a></div>
+            <br>
+            <br>
+            <input type="submit" name="submit" value="Save Changes">
+        </form>
+        
+        <form id="change-pw-form">
+            <div id="close-button"><ion-icon name="close-circle-outline"></ion-icon></div>
+            <br>
+            <label for="old-pw">Old Password</label>
+            <br>
+            <input type="password" id="old-pw" name="old-pw">
+            <br>
+            <br>
+            <label for="new-pw">New Password</label>
+            <br>
+            <input type="password" id="new-pw" name="new-pw">
+            <br>
+            <br>
+            <label for="rpt-new-pw">Repeat New Password</label>
+            <br>
+            <input type="password" id="rpt-new-pw" name="rpt-new-pw">
+            <br>
+            <br>
+            <input type="submit" name="submit" value="Submit">
+        </form>
+        <script>
+        function showPwForm() {
+            $(document).ready();
+            document.getElementById('change-pw-form').style.display = 'inline-block';
+        };
+        function closePwForm() {
+            $(document).ready();
+            document.getElementById('change-pw-form').style.display = 'none';
+        };
+
+        $("#pw").click(showPwForm);
+        $("#close-button").click(closePwForm);
+
+        </script>
+        <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+    </body>
+</html>

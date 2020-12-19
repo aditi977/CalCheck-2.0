@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&display=swap" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/css/global.css" type="text/css">
+    <link rel="stylesheet" href="/css/history_style.css" type="text/css">
+    <link rel="stylesheet" href="/css/header.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/css/ext/grid.css" />
+    <title>History</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/loadHistory.js"></script>
+    <script>
+
+        const eatenHistory = []
+        console.log(<%- JSON.stringify(user.foods) %>)
+        const foodInfoList = <%- JSON.stringify(user.foods) %>;
+
+
+        $(document).ready(function () {
+            const body = document.querySelector("#content-container");
+            if (<%- loggedin %>) {  
+                // console.log();
+                for (let foodInHistory of  <%- JSON.stringify(user.foods) %>) {
+                    const date = new Date(foodInHistory.date)
+                    const formattedDate = formatmdy(date)
+                    const food = {
+                        time: getTimeOfDay(date),
+                        name: foodInHistory.name,
+                        nutritionixId:foodInHistory.nutritionixId,
+                        imgSrc:foodInHistory.imgSrc,
+                        calories: foodInHistory.calories
+                    }
+                    // console.log(food);
+                    const existingDate = eatenHistory.find(eachDate => eachDate.date === formattedDate)
+                    if (existingDate) {
+                        existingDate.foodList.push(food)
+                    } else {
+                        eatenHistory.push({
+                            date: formattedDate,
+                            foodList: [
+                                food
+                            ]
+                        })
+                    }
+                }
+                for (var dateInfo of eatenHistory) {
+                    body.appendChild(displayDateEaten(dateInfo));
+                }
+            }else{
+                const nothingToSeeDiv = document.createElement("div");
+                nothingToSeeDiv.attributes="center"
+                nothingToSeeDiv.innerText = "Login to track your food!";
+                body.appendChild(nothingToSeeDiv);
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>
+            <a href="/">
+                <img class="logo" src="/img/logo.png"> <span>CalCheck</span>
+            </a>
+        </h1>
+
+        <nav class="nav-menu">
+            <ul>
+                <li>
+                    <a href="/">
+                        <ion-icon name="home-outline"></ion-icon> Home
+                    </a>
+                </li>
+                <li>
+                    <a href="/suggestions">
+                        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                        Suggestions
+                    </a>
+                </li>
+                <li>
+                    <a href=<%= loggedin?"/logout":"/login" %> style="padding:5px">
+                        <ion-icon name="enter-outline"></ion-icon> <%= loggedin?"Logout":"Login" %>
+                    </a>
+                </li>
+                <li class="dropdown" onclick="dropdown()"><a class="dropbtn" href="#">
+                        <a href="#">
+                            <ion-icon name="notifications-outline"></ion-icon>
+                            Notifications
+                        </a>
+                        <span class="badge">3</span>
+                        <div class="dropdown-content">
+                            <a href="#">Notification 1</a>
+                            <a href="#">Notification 2</a>
+                            <a href="#">Notification 3</a>
+                        </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <h2 class="subtitle">History</h2>
+
+    <div id="content-container" class="content-container" style="text-align: center;">
+
+    </div>
+
+    <script>
+        
+
+        
+
+
+
+    </script>
+    <script src="/load-footer.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+    <script src="/global.js"></script>
+</body>
+
+</html>
+
+<!--TEMPLATE ONLY-->
+<!-- <section>
+  <h3 class="date">5/14/2020</h3>
+  <div class="row">
+    <div class="col span-1-of-3 bkfst">
+      <a href="#"><img src="img/history/ramen.webp"/></a>
+      <p>Ramen</p>
+      <p>250 calories</p>
+    </div>
+    <div class="col span-1-of-3 lunch">
+      <a href="#"><img src="img/history/coke.jpg"/></a>
+      <p>Coca Cola</p>
+      <p>250 calories</p>
+      <a href="#"><img src="img/history/sushi.jpg"/></a>
+      <p>Sushi</p>
+      <p>250 calories</p>
+    </div>
+    <div class="col span-1-of-3 dinner">
+      <a href="#"><img src="img/history/coke.jpg"/></a>
+      <p>Coca Cola</p>
+      <p>250 calories</p>
+      <a href="#"><img src="img/history/shrimp.jpg"/></a>
+      <p>Shrimp</p>
+      <p>250 calories</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h3 class="date">5/13/2020</h3>
+  <div class="row">
+    <div class="col span-1-of-3 bkfst">
+      <a href="#"><img src="img/history/ramen.webp"/></a>
+      <p>250 calories</p>
+    </div>
+    <div class="col span-1-of-3 lunch">
+      <a href="#"><img src="img/history/ramen.webp"/></a>
+      <p>250 calories</p>
+    </div>
+    <div class="col span-1-of-3 dinner">
+      <a href="#"><img src="img/history/ramen.webp"/></a>
+      <p>250 calories</p>
+    </div>
+  </div>
+</section> -->
+
+<!-- const eatenHistory = [
+            {
+                date: "5/14/2020",
+                foodList: [
+                    {
+                        time: "breakfast",
+                        foodName: "Ramen",
+                    },
+                    {
+                        time: "lunch",
+                        foodName: "Coca Cola",
+                    },
+                    {
+                        time: "lunch",
+                        foodName: "Sushi",
+                    },
+                    {
+                        time: "dinner",
+                        foodName: "Coca Cola",
+                    },
+                    {
+                        time: "dinner",
+                        foodName: "Shrimp",
+                    },
+                ],
+            },
+            {
+                date: "5/13/2020",
+                foodList: [
+                    {
+                        time: "breakfast",
+                        foodName: "Ramen",
+                    },
+                    {
+                        time: "breakfast",
+                        foodName: "Coca Cola",
+                    },
+                    {
+                        time: "breakfast",
+                        foodName: "Coca Cola",
+                    },
+                    {
+                        time: "breakfast",
+                        foodName: "Coca Cola",
+                    },
+                    {
+                        time: "breakfast",
+                        foodName: "Coca Cola",
+                    },
+                    {
+                        time: "lunch",
+                        foodName: "Sushi",
+                    },
+                    {
+                        time: "dinner",
+                        foodName: "Ramen",
+                    },
+                    {
+                        time: "dinner",
+                        foodName: "Shrimp",
+                    },
+                ],
+            },
+        ]; -->

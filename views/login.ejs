@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/login_style.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <header>
+        <h1>
+            <a href="/">
+                <img class="logo" src="img/logo.png"> <span>CalCheck</span>
+            </a>
+        </h1>
+
+        <nav class="nav-menu">
+            <ul>
+
+                <li><a href="/">
+                        <ion-icon name="home-outline"></ion-icon> Home
+                    </a></li>
+                <li><a href="/suggestions">
+                        <ion-icon name="chatbubble-ellipses-outline"></ion-icon> Suggestions
+                    </a></li>
+        </nav>
+    </header>
+    <div class="filler"></div>
+
+
+    <div class="form-container" data-aos="fade-in" data-aos-duration="800">
+        <div class="user-img">
+            <ion-icon name="person-circle"></ion-icon>
+        </div>
+        <ul class="list">
+            <li>
+                <h4>Member Login</h4>
+            </li>
+            <input type='checkbox' id='form-switch'>
+            <form action="/user/login" class="auth-form" id="login-form" method="post">
+
+                <li><input type="text" name="email" placeholder="Email" /></li>
+                <li><input type="password" name="password" placeholder="**********" class="password-input" value="" />
+                </li>
+                <li><input type="submit" name="submit" value="Login" /></li>
+                <label for='form-switch'>Register</label>
+            </form>
+            <form action="/user/register" class="auth-form" id="register-form" method="post">
+
+                <li><input type="text" name="name" placeholder="Your name" /></li>
+                <li><input type="text" name="email" placeholder="Email" /></li>
+                <li><input type="password" name="password" placeholder="Password" class="password-input" value="" />
+                </li>
+                <li><input type="password" placeholder="Re-enter password" id="repassword-input" value="" /></li>
+                <li><input type="submit" name="submit" value="Register" /></li>
+                <label for='form-switch'>Already Member? Sign In</label>
+            </form>
+            <li><label for="checkbox"><input type="checkbox" id="showPasswordCB" onclick="showPassword()" />Show
+                    Password</label></li>
+            <li><a href="#">Forgot password?</a></li>
+        </ul>
+    </div>
+
+
+
+    <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+    <script>
+        const showPasswordCB = document.querySelector("#showPasswordCB")
+        const password_inputs = document.querySelectorAll(".password-input");
+        function showPassword() {
+            let passwordType = showPasswordCB.checked == true ? "text" : "password";
+            password_inputs.forEach(input => {
+                console.log(input)
+                input.type = passwordType;
+            });
+        }
+    </script>
+
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- <script src="src/react.development.js" crossorigin></script>
+<script src="src/react-dom.development.js" crossorigin></script> -->
+    <!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+    <script type="text/babel" src="src/login.js"></script>
+    <script> AOS.init(); </script>
+</body>
+
+</html>

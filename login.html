@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="views/css/global.css">
+    <link rel="stylesheet" href="views/css/header.css">
+    <link rel="stylesheet" href="views/css/login_style.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <header>
+		<h1>
+			<a href="index.html">
+				<img class="logo" src="views/img/logo.png"> <span>CalCheck</span>
+			</a>
+        </h1>
+        
+		<nav class="nav-menu">
+			<ul>
+
+				<li><a href="index.html">
+                    <ion-icon name="home-outline"></ion-icon> Home
+                </a></li>
+                <li><a href="suggestions.html">
+                    <ion-icon name="chatbubble-ellipses-outline"></ion-icon> Suggestions
+                </a></li>
+		</nav>
+	</header>
+    <div class="filler"></div>
+
+
+    <div class="form-container" data-aos="fade-in" data-aos-duration="800">
+        <div class="user-img">
+            <ion-icon name="person-circle"></ion-icon>
+        </div>
+        <ul class="list">
+            <li>
+                <h4>Member Login</h4>
+            </li>
+            <li><input type="text" name="User Name" placeholder="User Name"/></li>
+            <li><input type="password" name="Password" placeholder="**********" id="myInput" value=""/></li>
+            <li><input type="button" name="Submit" value="Submit"/></li>
+            <li><label for="checkbox"><input type="checkbox" onclick="showPassword()"/>Show Password</label></li>
+            <li><a href="#">Forgot password?</a></li>
+        </ul>
+    </div>
+
+
+
+
+    <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+    <script>
+        function showPassword() {
+          var x = document.getElementById("myInput");
+          if (x.type === "password") {
+            x.type = "text";
+          } else {
+            x.type = "password";
+          }
+        }
+        </script>
+        
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="src/react.development.js" crossorigin></script>
+<script src="src/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script type="text/babel" src="src/login.js"></script> 
+    <script> AOS.init(); </script>
+</body>
+
+</html>

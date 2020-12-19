@@ -1,0 +1,297 @@
+<html>
+
+<head>
+    <title>Hawaiian Pizza</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&display=swap" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="views/css/styles.css">
+    <link rel="stylesheet" href="views/css/global.css">
+
+    <link rel="stylesheet" href="views/css/header.css">
+
+    <style>
+        .nutrition-facts>table{
+            border-collapse: collapse;
+        }
+        .nutrition-facts{
+            padding:10px;
+            border: 2px solid black;
+        }
+
+        .nutrition-facts>table>tbody>tr:last-child{
+            font-size: 0.75em;
+        }
+        .content-container::after{
+            content: "";
+            clear:both;
+            display: table;
+        }
+
+        table{
+            font-size: 1.2em;
+        }
+        
+        th{
+            text-align: left;
+            font-weight: 400;
+        }
+        th, td:last-child{
+            border-bottom: 2px solid black;
+        }
+        .thick-border th, .thick-border td{
+            padding-bottom: 5px;
+            border-bottom: 0.5em solid black;
+        }
+        .thicker-border th, .thicker-border td{
+            padding-bottom: 5px;
+            border-bottom: 1em solid black;
+        }
+        /* tr:first-child *{
+            border: 0px;
+        } */
+        td{
+            text-align: right;
+        }
+        .no-border{
+            border:none;
+        }
+        .blank-cell{
+            width:20px;
+        }
+        hr{
+            background-color: black;
+        }
+        .nutrition-facts>p{
+            text-indent: 0px;
+            padding: 0px;
+        }
+        @media screen and (min-width: 600px) {
+            .scale-container {
+                float: left;
+            }
+            .nutrition-facts {
+                float: right;
+                width: calc(100% - 350px);
+            }
+
+        }
+        @media screen and (max-width: 600px) {
+            .nutrition-facts, .scale-container {
+                float: none;
+                margin: auto;
+            }
+            .nutrition-facts{
+                width: 90%;
+                
+            }
+
+        }
+        body::after{
+            content: "";
+  clear: both;
+  display: table;
+        }
+    </style>
+
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        console.log("working....")
+        $.ajax({
+            url: "http://localhost:4000/",
+            contentType: "application/json",type:'POST',
+                data: JSON.stringify({ mutation:`{
+                    login(login(email:"aditid@vt.edu",password:"Aditipass"){
+                        token
+                    })}`
+                }),
+            success: function(result) {
+                console.log(result)
+            }
+        });
+    </script>
+</head>
+
+<body>
+   <header>
+		<h1>
+			<h1>
+                <a href="index.html">
+                    <img class="logo" src="views/img/logo.png"> <span>CalCheck</span>
+                </a>
+            </h1>
+		</h1>
+
+		<nav class="nav-menu">
+			<ul>
+
+				<li>
+                    <a href="login.html">
+						<ion-icon name="enter-outline"></ion-icon> Login
+                    </a>
+                </li>
+
+				<li class="dropdown" onclick="dropdown()"><a class="dropbtn" href="#">
+                    <a href="#">
+						<ion-icon name="notifications-outline"></ion-icon>
+						Notifications
+                    </a>
+                    <span class="badge">3</span>
+					<div class="dropdown-content">
+						<a href="#">Notification 1</a>
+						<a href="#">Notification 2</a>
+						<a href="#">Notification 3</a>
+					</div>
+				</li>
+			</ul>
+
+		</nav>
+	</header>
+
+    <h2 class="subtitle">Nutrition Facts</h2>
+    <div>
+        
+        <div class="content-container">
+                <div class="scale-container" style=" width: 300px; height: 400px;position: relative;">
+                    <img class="" src="views/img/veggie-pizza-LRG.png" style="position:absolute;bottom:0;display:block;width:100%;transform: translateY(-50%);">
+                    <img src="views/img/scale.png" style="display:block; width:100%;position: absolute;bottom:0;z-index: -1;">
+                </div>
+                
+                <section class="nutrition-facts" style="overflow: hidden;">
+                    
+                    <!-- <hr/>
+                    <p>Serving Size 1/2 cup (about 82g)</p>
+                    <p>Serving Per Container About 8</p> -->
+                    <!-- <hr style="height:1em;"/> -->
+                    <table>
+                        
+                        <!-- Setup Row -->
+                        <tr>
+                            <td class="no-border" colspan="4">
+                                <h2 class="center-text"style=" color:black;font-weight: 400;"><b>Nutrition Facts</b></h2>
+                            </td>
+                        </tr>
+                        
+                        <tr id="serving-per-container">
+                            <th class="no-border" colspan="3"> servings per container</th>
+                        </tr>
+                        <tr id="serving-size" class="thicker-border">
+                            <th colspan="3"><b>Serving size</b></th>
+                            <td><b>2/3 cup (55g)</b></td>
+                        </tr>
+                        <tr id="calories" class="thick-border">
+                            <th colspan="3"><b>Amount per Serving<br/><span style="font-size:1.5em">Calories</span></b></th>
+                            <td><b style="font-size:2em">230</b></td>
+                        </tr>
+
+                        <!-- Actual Rows in Table -->
+                        <tr>
+                            <td colspan="4"><b>% Daily value*</b></td>
+                        </tr>
+                        <tr id="total-fat">
+                            <th colspan="3"><b>Total Fat</b> 8g</th>
+                            <td>10%</td>
+                        </tr>
+                        <tr id="saturated-fat">
+                            <td></td>
+                            <th colspan="2">Saturated Fat 1g</th>
+                            <td>5%</td>
+                        </tr>
+                        <tr id="trans-fat">
+                            <td class="blank-cell"></td>
+                            <th colspan="2">Trans Fat 0g</th>
+                            <td></td>
+                        </tr>
+                        <tr id ="cholesterol">
+                            <th colspan="3"><b>Cholesterol</b> 0mg</th>
+                            <td>0%</td>
+                        </tr>
+                        <tr id="sodium">
+                            <th colspan="3"><b>Sodium</b> 16mg</th>
+                            <td>7%</td>
+                        </tr>
+                        <tr id="total-carb">
+                            <td></td>
+                            <th colspan="2"><b>Total Carbohydrate</b> 37g</th>
+                            <td>13%</td>
+                        </tr>
+                        <tr id=total-sugars>
+                            <td></td>
+                            <th colspan="2">Total Sugars 12g</th>
+                            <td></td>
+                        </tr>
+                        <tr id="added-sugars">
+                            <td></td>
+                            <td></td>
+                            <th>Includes 10g Added Sugars</th>
+                            <td>20%</td>
+                        </tr>
+                        <tr id="protein" class="thicker-border">
+                            <th colspan="3"><b>Protein</b> 3g</th>
+                            <td></td>
+                        </tr>
+                        <tr id="vitamin-d">
+                            <th colspan="3">Vitamin D 20mg</th>
+                            <td>10%</td>
+                        </tr>
+                        <tr id="calcium">
+                            <th colspan="3">Calcium 260mg</th>
+                            <td>20%</td>
+                        </tr>
+                        <tr id="iron">
+                            <th colspan="3">Iron 8mg</th>
+                            <td>45%</td>
+                        </tr>
+                        <tr id="potassium" class="thick-border">
+                            <th colspan="3">Potassium 235mg</th>
+                            <td>6%</td>
+                        </tr>
+                        <tr>
+                            <th  style="vertical-align: baseline; border: none;">*</th>
+                            <td class="no-border" colspan="3" style=" border:none;text-align: left;">The % Daily Value (DV) tells you how much nutrient in a serving of food contributes to a daily diet 2,000 calories a day is used for general nutrition advice.</td>
+                        </tr>
+                    </table>
+                </section>
+            </div>
+    </div>
+
+</body>
+<script>
+    const foodNutrition ={
+        "serving-per-container":8,
+        "serving-size":"1/2 cup (about 82g)",
+        "calories":230,
+        "total-fat": "10%",
+        "saturated-fat":"5%",
+        "cholesterol":"0%",
+        "sodium":"7%",
+        "total-carb":"13%",
+        "total-sugars":"",
+        "added-sugars":"20%",
+        "vitamin-d":"10%",
+        "calcium":"20%",
+        "iron":"45%",
+        "potassium":"6%",
+    }
+
+    for(const [key,value] of Object.entries(foodNutrition)){
+        let elem =document.querySelector(`#${key} > td:last-child > b`)
+        if(elem){
+
+        }else if(elem =document.querySelector(`#${key} > td:last-child`)){
+
+        }else{
+            elem = document.querySelector(`#${key} > th`)
+        }
+        if(elem.nodeName==="TH"){
+            elem.textContent = value+elem.textContent;
+        }else{
+            elem.textContent = value;
+        }
+    }
+</script>
+<script src="load-footer.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+<script src ="global.js"></script>
+
+</html>

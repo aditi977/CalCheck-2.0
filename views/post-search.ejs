@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- <meta charset="utf-8"> -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width">
+	<title> CalCheck</title>
+	<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/styles.css">
+	<link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/header.css">
+
+</head>
+
+<body>
+	<header>
+		<h1>
+			<a href="/">
+				<img class="logo" src="/img/logo.png"> <span>CalCheck</span>
+			</a>
+		</h1>
+
+        
+		<nav class="nav-menu">
+			<ul>
+				<li><a href="/index">
+						<ion-icon name="home-outline"></ion-icon> Home
+					</a></li>
+				<li><a href="/suggestions">
+						<ion-icon name="chatbubble-ellipses-outline"></ion-icon> Suggestions
+					</a></li>
+                    <li>
+                        <a href=<%= loggedin?"/logout":"/login" %>>
+                            <ion-icon name="enter-outline"></ion-icon> <%= loggedin?"Logout":"Login" %>
+                        </a>
+                    </li>
+                <li class="dropdown" onclick="dropdown()"><a class="dropbtn" href="#">
+                    <a href="#">
+                        <ion-icon name="notifications-outline"></ion-icon>
+                        Notifications
+                    </a>
+                    <span class="badge">3</span>
+                    <div class="dropdown-content">
+                        <a href="#">Notification 1</a>
+                        <a href="#">Notification 2</a>
+                        <a href="#">Notification 3</a>
+                    </div>
+                </li>
+			</ul>
+		</nav>
+	</header>
+	<div class="food-search-container" style="background-color: #16a085;">
+		<form id="search-form" action="/search" method="GET" style="padding:35px">
+			<input class="search-bar" name="search-key" type="text" placeholder="What did you eat?" required>
+			<input class="search-button" type="submit" form="search-form" value="&#128269;">
+				<!-- <ion-icon name="search-outline"></ion-icon> -->
+        </input>
+		</form>
+	</div>
+	<div class="full-extend" style="text-align:center;">
+		<div class="content-container">
+			
+			<div class="search-results-container">
+
+			</div>
+		</div>
+	</div>
+	</div>
+	<script src="/load-footer.js"></script>
+	<script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+    <script>
+        const searchResultsContainer =document.querySelector(".search-results-container");
+        
+
+        const searchedFoods = <%- JSON.stringify(searchedFoods) %>;
+        console.log(searchedFoods)
+
+        function addItem(item){
+            const itemContainer = document.createElement("a");
+            var hrefAtt = document.createAttribute("href");
+            if(item.nix_item_id){
+                hrefAtt.value  = `/food/id/${encodeURIComponent(item.nix_item_id)}`;
+            }else{
+                hrefAtt.value  = `/food/name/${encodeURIComponent(item.food_name)}`;
+            }
+            itemContainer.setAttributeNode(hrefAtt)
+            itemContainer.classList.add("item-container");
+            itemContainer.innerHTML =`<div class="item-image" style=" background-image:url(${item.photo.thumb})"></div><p>${item.food_name}</p>`;  
+            searchResultsContainer.append(itemContainer)
+        }
+
+        searchedFoods.forEach(item => addItem(item))
+    </script>
+    <script src ="/global.js"></script>
+
+</body>
+
+</html>
+<!-- TEMPLATE ONLY -->
+<!-- const exampleItemList = [
+            {
+                name:"Pepperoni Pizza",
+                href: "single-item.html",
+                imageSrc: "img/pepperoni-pizza-SML.png",
+            },
+            {
+                name:"Veggie Pizza",
+                href: "single-item.html",
+                imageSrc: "img/veggie-pizza-SML.png",
+            },
+            {
+                name:"Hawaiian Pizza",
+                href: "single-item.html",
+                imageSrc: "img/hawaiian-pizza.png",
+            },
+            {
+                name:"Cheese Pizza",
+                href: "single-item.html",
+                imageSrc: "img/cheese-pizza-SML.png",
+            },
+            {
+                name:"Veggie Pizza",
+                href: "single-item.html",
+                imageSrc: "img/veggie-pizza-SML.png",
+            },
+            {
+                name:"Pepperoni Pizza",
+                href: "single-item.html",
+                imageSrc: "img/pepperoni-pizza-SML.png",
+            },
+            {
+                name:"Cheese Pizza",
+                href: "single-item.html",
+                imageSrc: "img/cheese-pizza-SML.png",
+            },
+        ] -->

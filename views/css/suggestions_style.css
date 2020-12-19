@@ -1,0 +1,70 @@
+h2 {
+    font-weight: 300;
+    padding: 50px;
+}
+
+.suggestions img {
+    width: 250px;
+    height: auto;
+    float: left;
+    padding-right: 30px;
+}
+
+.suggestions {
+    font-weight: 300;
+    margin:20px;
+    margin-top: 30px;
+    display: inline-block;
+}
+
+.num-2 {
+    margin-top: 30px;
+}
+
+
+.caption {
+    color: #16a085;
+    text-align: left;
+}
+
+p {
+    text-align: left;
+    text-indent: 0;
+    color: grey;
+}
+
+.info {
+    display: block;
+    /* width: 90%; */
+}
+
+.more-suggestions {
+    margin: 30px;
+}
+
+.more-suggestions p {
+    text-align: center;
+    color: #16a085;
+}
+
+.more-suggestions img {
+    width: 70%;
+    height: auto;
+    opacity: 100%;
+    margin-top: 20px;
+}
+
+.more-suggestions img:hover, .more-suggestions img:active {
+    opacity: .2;
+}
+
+.more img {
+    width: 100%;
+    height: auto;
+}
+
+@media screen and (max-width:600px){
+    .suggestions img {
+        width: 100%;
+    }
+}
