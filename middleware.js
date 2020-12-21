@@ -34,12 +34,13 @@ const fakeUser = {
 app.set("view-engine", "ejs");
 app.use(cors());
 app.use(session({
-    // secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET,
     secret:"secret",
     resave: true,
     saveUninitialized: true,
     cookie: { maxAge: 60000 }
 }))
+// app.use(express.static('views/img'))
 app.use(express.static('views'))
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -51,6 +52,9 @@ function isAuthenticated(req) {
 }
 
 app.get("/", (req, res) => {
+    res.render("index.ejs", { loggedin: isAuthenticated(req) })
+});
+app.get("/index.html", (req, res) => {
     res.render("index.ejs", { loggedin: isAuthenticated(req) })
 });
 
