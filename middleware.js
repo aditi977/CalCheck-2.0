@@ -1,6 +1,6 @@
-// if (process.env.NODE_ENV !== 'production') {
-//     require('dotenv').config()
-// }
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -10,7 +10,13 @@ const session = require("express-session")
 const { URL, URLSearchParams } = require('url')
 
 const cors = require("cors");
-// const { encode } = require('punycode');
+const mongoose = require('mongoose');
+
+//MongoDB stuff
+mongoose.connect(process.env.DB_CONN, {useNewUrlParser: true,  useUnifiedTopology: true,});
+
+
+//end of MongoDB stuff
 
 const fakeUser = {
     name: "q",
