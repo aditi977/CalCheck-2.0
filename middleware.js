@@ -4,44 +4,37 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-// const ejs = require("ejs");
+const { mongoose, registerUser, loginUser } = require("./backend/server")
 const fetch = require("node-fetch");
 const session = require("express-session")
 const { URL, URLSearchParams } = require('url')
 
 const cors = require("cors");
-const mongoose = require('mongoose');
 
-//MongoDB stuff
-mongoose.connect(process.env.DB_CONN, {useNewUrlParser: true,  useUnifiedTopology: true,});
-
-
-//end of MongoDB stuff
-
-const fakeUser = {
-    name: "q",
-    password: "q",
-    email: "q@gmail.com",
-    gender: "email",
-    foods: [
-        {
-            id: 1,
-            name: "ramen",
-            date: "5/13/2020",
-            eatenBy: "AYTHNJFDS",
-            isCommonFood:true,
-            nutritionixId: "123456789",
-            imgSrc: "img/history/sushi.jpg",
-            calories:123,
-        }
-    ]
-}
+// const fakeUser = {
+//     name: "q",
+//     password: "q",
+//     email: "q@gmail.com",
+//     gender: "email",
+//     foods: [
+//         {
+//             id: 1,
+//             name: "ramen",
+//             date: "5/13/2020",
+//             eatenBy: "AYTHNJFDS",
+//             isCommonFood: true,
+//             nutritionixId: "123456789",
+//             imgSrc: "img/history/sushi.jpg",
+//             calories: 123,
+//         }
+//     ]
+// }
 
 app.set("view-engine", "ejs");
 app.use(cors());
 app.use(session({
-    // secret: process.env.SESSION_SECRET,
-    secret:"secret",
+    secret: process.env.SESSION_SECRET,
+    secret: "secret",
     resave: true,
     saveUninitialized: true,
     cookie: { maxAge: 60000 }
@@ -56,7 +49,22 @@ function isAuthenticated(req) {
     return req.session.autho ? true : false;
 }
 
+app.get('/is-mongoose-ok', function (req, res) {
+    if (mongoose) {
+        res.json({ isMongooseOk: !!mongoose.connection.readyState })
+    } else {
+        res.json({ isMongooseOk: false })
+    }
+});
+app.get('/test-mongoose', function (req, res) {
+    createAndSavePerson();
+    res.json({ isMongooseOk: true })
+});
+
 app.get("/", (req, res) => {
+    res.render("index.ejs", { loggedin: isAuthenticated(req) })
+});
+app.get("/index.html", (req, res) => {
     res.render("index.ejs", { loggedin: isAuthenticated(req) })
 });
 
@@ -64,61 +72,18 @@ app.get("/login", (req, res) => {
     res.render("login.ejs");
 });
 app.post("/user/register", (req, res) => {
-    fetch("http://localhost:4000/graphql", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-            query: `mutation{
-                signup(name:"${req.body.name}",email:"${req.body.email}",password:"${req.body.password}"){
-                    user{
-                        name
-                    }
-                }
-              }
-            `
-        })
-    }).then(res => res.json())
-        .then(data => {
-            if (data.errors) {
-                throw data.errors;
-            } else {
-                res.redirect("/login")
-            }
-        }
-        )
-        .catch(err => res.send(err));
+    registerUser(req.body.name, req.body.email, req.body.password, []);
+    res.redirect("/login");
 
 });
-app.post("/user/login", (req, res) => {
-    fetch("http://localhost:4000/graphql", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-            query: `mutation{
-                login(email:"${req.body.email}",password:"${req.body.password}"){
-                    token
-                }   
-            }
-            `
-        })
-    }).then(res => res.json())
-        .then(data => {
-            if (data.errors) {
-                throw data.errors;
-            } else {
-                req.session.autho = data.data.login.token;
-                loggedin = isAuthenticated(req);
-                res.redirect("/")
-            }
-        }
-        )
-        .catch(err => res.send(err));
+app.post("/user/login", async function (req, res,next) {
+    try {
+        req.session.autho = await loginUser(req.body.email, req.body.password);
+
+        res.redirect("/");
+    } catch (err) {
+        next(err);
+    }
 });
 app.get("/suggestions", (req, res) => {
     res.render("suggestions.ejs", { loggedin: isAuthenticated(req) });
