@@ -134,7 +134,6 @@ app.get("/search", (req, res) => {
     let searchURL = new URL("https://trackapi.nutritionix.com/v2/search/instant");
     let params = { query: req.query['search-key'] };
     searchURL.search = new URLSearchParams(params).toString();
-    // console.log(JSON.stringify(bodyQuery));
     fetch(searchURL, {
         method: "GET",
         headers: {
@@ -206,7 +205,7 @@ app.get("/food/id/:id", (req, res) => {
 var Person = mongoose.model("Person", UserSchema)
 
 app.get('/account-settings', authenticateToken, async (req, res) => {
-    console.log(req.session.autho);
+    
     const user = await Person.findOne({email: req.user.email}).exec();
     res.render("account-settings.ejs", user);
     
@@ -214,19 +213,18 @@ app.get('/account-settings', authenticateToken, async (req, res) => {
 
 
 function authenticateToken(req, res, next){
-    const authHeader = req.headers['authorization'];
+
+    const authHeader = req.session.autho;
     const token = authHeader && authHeader.split(' ')[1];
     if(token == null) return res.sendStatus('401');
 
-    jwt.process(token, process.env.ACCESS_TOKEN_SECRET, (err, user) =>{
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) =>{
         if(err) return res.sendStatus('403'); 
-        console.log(user);
         req.user = user;
         next();
     });
 }
 app.post("/add-food", async (req, res) => {
-    console.log(req.body)
     addFoodToCurrentUser("chaule19@vt.edu", req.body.name, req.body.foodURL, req.body.imgSrc, req.body.calories);
 });
 
