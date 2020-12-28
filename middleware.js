@@ -47,6 +47,8 @@ app.get('/test-mongoose', function (req, res) {
 app.get("/", (req, res) => {
     res.render("index.ejs", { loggedin: isAuthenticated(req) })
 });
+
+//Remove this later, I'm lazy
 app.get("/index.html", (req, res) => {
     res.render("index.ejs", { loggedin: isAuthenticated(req) })
 });
@@ -59,7 +61,7 @@ app.post("/user/register", (req, res) => {
     res.redirect("/login");
 
 });
-app.post("/user/login", async function (req, res,next) {
+app.post("/user/login", async function (req, res, next) {
     try {
         req.session.autho = await loginUser(req.body.email, req.body.password);
 
@@ -79,7 +81,7 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
 });
 app.get("/history", (req, res) => {
-    fetch('http://localhost:4000/graphql', {
+    const jsonFetch = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -102,16 +104,21 @@ app.get("/history", (req, res) => {
               }
               `,
         })
-    })
-        .then(r => r.json())
-        .then(data => {
-            if (data.errors) throw data.errors
-            const { user } = data.data;
-            res.render("history.ejs", { user, loggedin: isAuthenticated(req) });
-        })
-        .catch(err => {
-            console.error(err)
-        });
+    };
+    const tempUser = {
+        name: "John Doe",
+        foods: [
+            {
+                name: "chicken", 
+                calories: 187,
+                imgSrc: "https://nix-tag-images.s3.amazonaws.com/9_thumb.jpg",
+                foodURL: "/food/name/chicken",
+                name: "chicken",
+                date: Date.now(),
+            }
+        ]
+    }
+    res.render("history.ejs", { user: tempUser, loggedin: true });
 });
 app.get("/search", (req, res) => {
     let searchURL = new URL("https://trackapi.nutritionix.com/v2/search/instant");
@@ -159,21 +166,15 @@ app.get("/food/name/:foodname", (req, res) => {
     }).then(res => res.json())
         .then(data => {
             const { full_nutrients, ...food } = data.foods[0]
-            // console.log(full_nutrients)
-            // console.log(food)
-            res.render("single-item.ejs", { food, nfByCode: findNutrientsValue(full_nutrients), loggedin: isAuthenticated(req) })
+            res.render("single-item.ejs", { food, foodURL: `/food/id/${req.params.foodname}`, nfByCode: findNutrientsValue(full_nutrients), loggedin: isAuthenticated(req) })
         }
         )
         .catch(err => res.send(err));
 })
 
-app.post("/add-food", async (req,res) => {
-    // console.log(req.body)
-    addFoodToCurrentUser("chaule19@vt.edu",req.body.name, req.body.calories);
-    // res.render("index.ejs");
-});
 
 app.get("/food/id/:id", (req, res) => {
+
     fetch(`https://trackapi.nutritionix.com/v2/search/item?nix_item_id=${req.params.id}`, {
         method: "GET",
         headers: {
@@ -185,13 +186,16 @@ app.get("/food/id/:id", (req, res) => {
     }).then(res => res.json())
         .then(data => {
             const { full_nutrients, ...food } = data.foods[0]
-            // console.log(full_nutrients)
-            // console.log(food)
-            res.render("single-item.ejs", { food, nfByCode: findNutrientsValue(full_nutrients), loggedin: isAuthenticated(req) })
+            res.render("single-item.ejs", { food, foodURL: `/food/id/${req.params.id}`, nfByCode: findNutrientsValue(full_nutrients), loggedin: isAuthenticated(req) })
         }
         )
         .catch(err => res.send(err));
 })
+
+app.post("/add-food", async (req, res) => {
+    console.log(req.body)
+    addFoodToCurrentUser("chaule19@vt.edu", req.body.name, req.body.foodURL, req.body.imgSrc, req.body.calories);
+});
 
 // Not found middleware
 app.use((req, res, next) => {
@@ -223,12 +227,3 @@ const listener = app.listen(process.env.PORT || 3000, () => {
     console.log("Your app is listening on http://localhost:" + listener.address().port);
 });
 
-
-// query: `{
-//     foods(filter:"${req.query['search-key']}"){
-//       name
-//       url_name
-//       img_src
-//     }
-//   }
-// `

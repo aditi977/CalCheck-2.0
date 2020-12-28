@@ -222,11 +222,12 @@
         const json = {
             name:<%- `\"${food.food_name}\"` %>,
             calories: <%= food.nf_calories %>,
+            imgSrc: "<%- `${food.photo.thumb}` %>",
+            foodURL: window.location.pathname,
         };
-        // console.log(json)
+        console.log(json)
         xhr.open("POST", "/add-food", true);
         xhr.setRequestHeader("Content-type","application/json");
-        // xhr.setRequestHeader("Accept","application/json");
         xhr.send(JSON.stringify(json));
     }
 </script>

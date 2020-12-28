@@ -12,9 +12,11 @@ var UserSchema = new Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true },
-    password: String,
+    password: { type: String, required: true },
     favoriteFoods: [{
-      foodLink: {type: String, required: true},
+      foodName: {type: String, required: true},
+      foodURL: {type: String, required: true},
+      imgSrc: {type: String, required: true},
       date: { type: Date, default: Date.now },
       calories: {type: Number, required: true}
     }]
@@ -40,13 +42,14 @@ async function loginUser(email, password) {
   return user._id;
 }
 
-async function addFoodToCurrentUser(email, foodLink, calories) {
-  // const user = await Person.findOne({ email: email }).exec();
-  console.log(foodLink)
+async function addFoodToCurrentUser(email, foodName, foodURL, imgSrc, calories) {
+  console.log(foodURL)
   const user = await Person.findOneAndUpdate({ email }, {
     $push: {
       favoriteFoods:{
-        foodLink,
+        foodName,
+        foodURL,
+        imgSrc,
         calories
       }
     }
