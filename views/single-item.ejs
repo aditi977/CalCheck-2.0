@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <title>Hawaiian Pizza</title>
@@ -11,159 +12,225 @@
     <link rel="stylesheet" href="/css/header.css">
 
 
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
-   <header>
-		<h1>
-			<h1>
+    <header>
+        <h1>
+            <h1>
                 <a href="/">
                     <img class="logo" src="/img/logo.png"> <span>CalCheck</span>
                 </a>
             </h1>
-		</h1>
+        </h1>
 
-		<nav class="nav-menu">
-			<ul>
+        <nav class="nav-menu">
+            <ul>
 
-				<li>
+                <li>
                     <a href="/login">
-						<ion-icon name="enter-outline"></ion-icon> Login
+                        <ion-icon name="enter-outline"></ion-icon> Login
                     </a>
                 </li>
 
-				<li class="dropdown" onclick="dropdown()"><a class="dropbtn" href="#">
-                    <a href="#">
-						<ion-icon name="notifications-outline"></ion-icon>
-						Notifications
-                    </a>
-                    <span class="badge">3</span>
-					<div class="dropdown-content">
-						<a href="#">Notification 1</a>
-						<a href="#">Notification 2</a>
-						<a href="#">Notification 3</a>
-					</div>
-				</li>
-			</ul>
+                <li class="dropdown" onclick="dropdown()"><a class="dropbtn" href="#">
+                        <a href="#">
+                            <ion-icon name="notifications-outline"></ion-icon>
+                            Notifications
+                        </a>
+                        <span class="badge">3</span>
+                        <div class="dropdown-content">
+                            <a href="#">Notification 1</a>
+                            <a href="#">Notification 2</a>
+                            <a href="#">Notification 3</a>
+                        </div>
+                </li>
+            </ul>
 
-		</nav>
-	</header>
+        </nav>
+    </header>
 
     <h2 class="subtitle">Nutrition Facts</h2>
     <div>
-        
+
         <div class="content-container">
-                <div class="scale-container" style=" width: 300px; height: 400px;position: relative;">
-                    <img class="" src="<%- `${food.photo.thumb}` %>" style="position:absolute;bottom:0;display:block;width:100%;transform: translateY(-50%);">
-                    <img src="/img/scale.png" style="display:block; width:100%;position: absolute;bottom:0;z-index: -1;">
-                </div>
-                
-                <section class="nutrition-facts" style="overflow: hidden;">
-                    
-                    <!-- <hr/>
+            <div class="scale-container" style=" width: 300px; height: 400px;position: relative;">
+                <img class="" src="<%- `${food.photo.thumb}` %>"
+                    style="position:absolute;bottom:0;display:block;width:100%;transform: translateY(-50%);">
+                <img src="/img/scale.png" style="display:block; width:100%;position: absolute;bottom:0;z-index: -1;">
+            </div>
+            <button onclick="addFoodToCurrentUser()">Add food</button>
+            <section class="nutrition-facts" style="overflow: hidden;">
+
+                <!-- <hr/>
                     <p>Serving Size 1/2 cup (about 82g)</p>
                     <p>Serving Per Container About 8</p> 
                     <hr style="height:1em;"/> -->
-                    <table>
-                        
-                        <!-- Setup Row -->
-                        <tr>
-                            <td class="no-border" colspan="4">
-                                <h2 class="center-text"style=" color:black;font-weight: 400;"><b>Nutrition Facts</b></h2>
+                <table>
+
+                    <!-- Setup Row -->
+                    <tr>
+                        <td class="no-border" colspan="4">
+                            <h2 class="center-text" style=" color:black;font-weight: 400;"><b>Nutrition Facts</b></h2>
+                        </td>
+                    </tr>
+
+                    <tr id="serving-per-container">
+                        <th class="no-border" colspan="3">
+                            <%- `${food.serving_qty||0}` %> servings per container
+                        </th>
+                    </tr>
+                    <tr id="serving-size" class="thicker-border">
+                        <th colspan="3"><b>Serving size</b></th>
+                        <td><b>
+                                <%- `${food.serving_qty||""} ${food.serving_unit} (${food.serving_weight_grams}g)` %>
+                            </b></td>
+                    </tr>
+                    <tr id="calories" class="thick-border">
+                        <th colspan="3"><b>Amount per Serving<br /><span style="font-size:1.5em">Calories</span></b>
+                        </th>
+                        <td><b style="font-size:2em">
+                                <%- `${Math.round(food.nf_calories)}` %>
+                            </b></td>
+                    </tr>
+
+                    <!-- Actual Rows in Table -->
+                    <tr>
+                        <td colspan="4"><b>% Daily value*</b></td>
+                    </tr>
+                    <tr id="total-fat">
+                        <th colspan="3"><b>Total Fat </b>
+                            <%- `${Math.round(nfByCode(204))}g` %>
+                        </th>
+                        <td>
+                            <%- `${Math.round(nfByCode(204)/0.78)}%` %>
+                        </td>
+                    </tr>
+                    <tr id="saturated-fat">
+                        <td></td>
+                        <th colspan="2">Saturated Fat <%- `${Math.round(nfByCode(606))}g` %>
+                        </th>
+                        <td>
+                            <%- `${Math.round(nfByCode(606)/0.20)}%` %>
+                        </td>
+                    </tr>
+                    <tr id="trans-fat">
+                        <td class="blank-cell"></td>
+                        <th colspan="2">Trans Fat <%- `${Math.round(nfByCode(605))}g` %>
+                        </th>
+                        <td></td>
+                    </tr>
+                    <tr id="cholesterol">
+                        <th colspan="3"><b>Cholesterol</b>
+                            <%- `${Math.round(nfByCode(601))}mg` %>
+                        </th>
+                        <td>
+                            <%- `${Math.round(nfByCode(601)/3)}%` %>
+                        </td>
+                    </tr>
+                    <tr id="sodium">
+                        <th colspan="3"><b>Sodium</b>
+                            <%- `${Math.round(nfByCode(307))}mg` %>
+                        </th>
+                        <td>
+                            <%- `${Math.round(nfByCode(307)/23)}%` %>
+                        </td>
+                    </tr>
+                    <tr id="total-carb">
+                        <td></td>
+                        <th colspan="2"><b>Total Carbohydrate</b>
+                            <%- `${Math.round(nfByCode(205))}g` %>
+                        </th>
+                        <td>
+                            <%- `${Math.round(nfByCode(205)/2.75)}%` %>
+                        </td>
+                    </tr>
+                    <tr id=total-sugars>
+                        <td></td>
+                        <th colspan="2">Total Sugars <%- `${Math.round(nfByCode(269))}g` %>
+                        </th>
+                        <td></td>
+                    </tr>
+                    <tr id="added-sugars">
+                        <td></td>
+                        <td></td>
+                        <th>Includes <%- `${Math.round(nfByCode(539))}g` %> Added Sugars</th>
+                        <td>
+                            <%- `${Math.round(nfByCode(539)/0.50)}%` %>
+                        </td>
+                    </tr>
+                    <tr id="protein" class="thicker-border">
+                        <th colspan="3"><b>Protein</b>
+                            <%- `${Math.round(nfByCode(203))}g` %>
+                        </th>
+                        <td>
+                            <%- `${Math.round(nfByCode(203)/0.50)}%` %>
+                        </td>
+                    </tr>
+                    <tr id="vitamin-d">
+                        <th colspan="3">Vitamin D <%- `${Math.round(nfByCode(324))}mcg` %>
+                        </th>
+                        <td>
+                            <%- `${Math.round(nfByCode(324)/0.20)}%` %>
+                        </td>
+                    </tr>
+                    <tr id="calcium">
+                        <th colspan="3">Calcium <%- `${Math.round(nfByCode(301))}mg` %>
+                        </th>
+                        <td>
+                            <%- `${Math.round(nfByCode(301)/13)}%` %>
+                        </td>
+                    </tr>
+                    <tr id="iron">
+                        <th colspan="3">Iron <%- `${Math.round(nfByCode(303))}mg` %>
+                        </th>
+                        <td>
+                            <%- `${Math.round(nfByCode(303)/0.18)}%` %>
+                        </td>
+                    </tr>
+                    <tr id="potassium" class="thick-border">
+                        <th colspan="3">Potassium <%- `${Math.round(nfByCode(306))}mg` %>
+                        </th>
+                        <td>
+                            <%- `${Math.round(nfByCode(306)/47)}%` %>
+                        </td>
+                    </tr>
+                    <% if(food.nf_ingredient_statement) { %>
+                        <tr class="nf-note">
+                            <!-- <th  style="vertical-align: baseline; border: none;">*</th> -->
+                            <td class="no-border" colspan="4" style=" border:none;text-align: left;">Ingredients: <%-
+                                    food.nf_ingredient_statement %>
                             </td>
                         </tr>
-                        
-                        <tr id="serving-per-container">
-                            <th class="no-border" colspan="3"><%- `${food.serving_qty||0}` %> servings per container</th>
-                        </tr>
-                        <tr id="serving-size" class="thicker-border">
-                            <th colspan="3"><b>Serving size</b></th>
-                            <td><b><%- `${food.serving_qty||""} ${food.serving_unit} (${food.serving_weight_grams}g)` %></b></td>
-                        </tr>
-                        <tr id="calories" class="thick-border">
-                            <th colspan="3"><b>Amount per Serving<br/><span style="font-size:1.5em">Calories</span></b></th>
-                            <td><b style="font-size:2em"><%- `${Math.round(food.nf_calories)}` %></b></td>
-                        </tr>                                                                                                                                                                   
-
-                        <!-- Actual Rows in Table -->
-                        <tr>
-                            <td colspan="4"><b>% Daily value*</b></td>
-                        </tr>
-                        <tr id="total-fat">
-                            <th colspan="3"><b>Total Fat </b><%- `${Math.round(nfByCode(204))}g` %></th>
-                            <td><%- `${Math.round(nfByCode(204)/0.78)}%` %></td>
-                        </tr>
-                        <tr id="saturated-fat">
-                            <td></td>
-                            <th colspan="2">Saturated Fat <%- `${Math.round(nfByCode(606))}g` %></th>
-                            <td><%- `${Math.round(nfByCode(606)/0.20)}%` %></td>
-                        </tr>
-                        <tr id="trans-fat">
-                            <td class="blank-cell"></td>
-                            <th colspan="2">Trans Fat <%- `${Math.round(nfByCode(605))}g` %></th>
-                            <td></td>
-                        </tr>
-                        <tr id ="cholesterol">
-                            <th colspan="3"><b>Cholesterol</b> <%- `${Math.round(nfByCode(601))}mg` %></th>
-                            <td><%- `${Math.round(nfByCode(601)/3)}%` %></td>
-                        </tr>
-                        <tr id="sodium">
-                            <th colspan="3"><b>Sodium</b> <%- `${Math.round(nfByCode(307))}mg` %></th>
-                            <td><%- `${Math.round(nfByCode(307)/23)}%` %></td>
-                        </tr>
-                        <tr id="total-carb">
-                            <td></td>
-                            <th colspan="2"><b>Total Carbohydrate</b> <%- `${Math.round(nfByCode(205))}g` %></th>
-                            <td><%- `${Math.round(nfByCode(205)/2.75)}%` %></td>
-                        </tr>
-                        <tr id=total-sugars>
-                            <td></td>
-                            <th colspan="2">Total Sugars <%- `${Math.round(nfByCode(269))}g` %></th>
-                            <td></td>
-                        </tr>
-                        <tr id="added-sugars">
-                            <td></td>
-                            <td></td>
-                            <th>Includes <%- `${Math.round(nfByCode(539))}g` %> Added Sugars</th>
-                            <td><%- `${Math.round(nfByCode(539)/0.50)}%` %></td>
-                        </tr>
-                        <tr id="protein" class="thicker-border">
-                            <th colspan="3"><b>Protein</b> <%- `${Math.round(nfByCode(203))}g` %></th>
-                            <td><%- `${Math.round(nfByCode(203)/0.50)}%` %></td>
-                        </tr>
-                        <tr id="vitamin-d">
-                            <th colspan="3">Vitamin D <%- `${Math.round(nfByCode(324))}mcg` %></th>
-                            <td><%- `${Math.round(nfByCode(324)/0.20)}%` %></td>
-                        </tr>
-                        <tr id="calcium">
-                            <th colspan="3">Calcium <%- `${Math.round(nfByCode(301))}mg` %></th>
-                            <td><%- `${Math.round(nfByCode(301)/13)}%` %></td>
-                        </tr>
-                        <tr id="iron">
-                            <th colspan="3">Iron <%- `${Math.round(nfByCode(303))}mg` %></th>
-                            <td><%- `${Math.round(nfByCode(303)/0.18)}%` %></td>
-                        </tr>
-                        <tr id="potassium" class="thick-border">
-                            <th colspan="3">Potassium <%- `${Math.round(nfByCode(306))}mg` %></th>
-                            <td><%- `${Math.round(nfByCode(306)/47)}%` %></td>
-                        </tr>
-                        <% if(food.nf_ingredient_statement) { %>
-                            <tr class="nf-note">
-                                <!-- <th  style="vertical-align: baseline; border: none;">*</th> -->
-                                <td class="no-border" colspan="4" style=" border:none;text-align: left;">Ingredients: <%- food.nf_ingredient_statement %></td>
-                            </tr>
                         <% } %>
-                        <tr class="nf-note">
-                            <th  style="vertical-align: baseline; border: none;">*</th>
-                            <td class="no-border" colspan="3" style=" border:none;text-align: left;">The % Daily Value (DV) tells you how much nutrient in a serving of food contributes to a daily diet 2,000 calories a day is used for general nutrition advice.</td>
-                        </tr>
-                    </table>
-                </section>
-            </div>
+                            <tr class="nf-note">
+                                <th style="vertical-align: baseline; border: none;">*</th>
+                                <td class="no-border" colspan="3" style=" border:none;text-align: left;">The % Daily
+                                    Value (DV) tells you how much nutrient in a serving of food contributes to a daily
+                                    diet 2,000 calories a day is used for general nutrition advice.</td>
+                            </tr>
+                </table>
+            </section>
+        </div>
     </div>
 
 </body>
+<script>
+    var xhr = new XMLHttpRequest();
+    function addFoodToCurrentUser() {
+        const json = {
+            name:<%- `\"${food.food_name}\"` %>,
+            calories: <%= food.nf_calories %>,
+            imgSrc: "<%- `${food.photo.thumb}` %>",
+            foodURL: window.location.pathname,
+        };
+        console.log(json)
+        xhr.open("POST", "/add-food", true);
+        xhr.setRequestHeader("Content-type","application/json");
+        xhr.send(JSON.stringify(json));
+    }
+</script>
 <script src="/load-footer.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
 
