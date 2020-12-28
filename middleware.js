@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const { mongoose, registerUser, loginUser, addFoodToCurrentUser } = require("./backend/server")
+const { mongoose, registerUser, loginUser, addFoodToCurrentUser, getCurrentUser } = require("./backend/server")
 const fetch = require("node-fetch");
 const session = require("express-session")
 const { URL, URLSearchParams } = require('url')
@@ -80,7 +80,7 @@ app.get("/logout", (req, res) => {
     req.session.destroy();
     res.redirect("/");
 });
-app.get("/history", (req, res) => {
+app.get("/history", async (req, res) => {
     const jsonFetch = {
         method: 'POST',
         headers: {
@@ -105,20 +105,10 @@ app.get("/history", (req, res) => {
               `,
         })
     };
-    const tempUser = {
-        name: "John Doe",
-        foods: [
-            {
-                name: "chicken", 
-                calories: 187,
-                imgSrc: "https://nix-tag-images.s3.amazonaws.com/9_thumb.jpg",
-                foodURL: "/food/name/chicken",
-                name: "chicken",
-                date: Date.now(),
-            }
-        ]
-    }
-    res.render("history.ejs", { user: tempUser, loggedin: true });
+
+
+    const user = await getCurrentUser("test")
+    res.render("history.ejs", { user, loggedin: true });
 });
 app.get("/search", (req, res) => {
     let searchURL = new URL("https://trackapi.nutritionix.com/v2/search/instant");
@@ -194,7 +184,7 @@ app.get("/food/id/:id", (req, res) => {
 
 app.post("/add-food", async (req, res) => {
     console.log(req.body)
-    addFoodToCurrentUser("chaule19@vt.edu", req.body.name, req.body.foodURL, req.body.imgSrc, req.body.calories);
+    addFoodToCurrentUser("test", req.body.name, req.body.foodURL, req.body.imgSrc, req.body.calories);
 });
 
 // Not found middleware
