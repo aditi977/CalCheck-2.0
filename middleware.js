@@ -8,9 +8,9 @@ const { mongoose, registerUser, loginUser } = require("./backend/server")
 const fetch = require("node-fetch");
 const session = require("express-session")
 const { URL, URLSearchParams } = require('url')
-
+const { UserSchema } = require("./backend/server");
 const cors = require("cors");
-
+const jwt = require('jsonwebtoken');
 // const fakeUser = {
 //     name: "q",
 //     password: "q",
@@ -79,11 +79,20 @@ app.post("/user/register", (req, res) => {
 app.post("/user/login", async function (req, res,next) {
     try {
         req.session.autho = await loginUser(req.body.email, req.body.password);
+        const email = req.body.email;
+        const user = await Person.findOne({email: email}).exec();
+        
+        const token = jwt.sign({email}, process.env.ACCESS_TOKEN_SECRET);
+        req.session.autho = "Bearer " + token;
 
+
+        
         res.redirect("/");
     } catch (err) {
         next(err);
     }
+
+    
 });
 app.get("/suggestions", (req, res) => {
     res.render("suggestions.ejs", { loggedin: isAuthenticated(req) });
@@ -202,6 +211,30 @@ app.get("/food/id/:id", (req, res) => {
         )
         .catch(err => res.send(err));
 })
+
+
+var Person = mongoose.model("Person", UserSchema)
+
+app.get('/account-settings', authenticateToken, async (req, res) => {
+    console.log(req.session.autho);
+    const user = await Person.findOne({email: req.user.email}).exec();
+    res.render("account-settings.ejs", user);
+    
+})
+
+
+function authenticateToken(req, res, next){
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if(token == null) return res.sendStatus('401');
+
+    jwt.process(token, process.env.ACCESS_TOKEN_SECRET, (err, user) =>{
+        if(err) return res.sendStatus('403'); 
+        console.log(user);
+        req.user = user;
+        next();
+    });
+}
 
 // Not found middleware
 app.use((req, res, next) => {

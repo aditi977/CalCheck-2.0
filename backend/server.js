@@ -1,4 +1,9 @@
 const mongoose = require("mongoose");
+var jwt = require('jwt-simple');
+
+const dotenv = require("dotenv");
+dotenv.config();
+
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -21,7 +26,8 @@ var Person = mongoose.model("Person", UserSchema)
 
 
 function registerUser(name, email, password, favoriteFoods) {
-  const user = new Person({ name, email, password, favoriteFoods })
+  var pw_encoded = jwt.encode(password, process.env.SECRET_ENCRYPT);
+  const user = new Person({ name, email, password: pw_encoded, favoriteFoods })
   user.save(function (err) {
     if (err) throw err;
   })
@@ -30,8 +36,11 @@ function registerUser(name, email, password, favoriteFoods) {
 async function loginUser(email, password)
 {
   const user = await Person.findOne({email: email}).exec();
-  if(user.password != password)
+  var pw_encoded = jwt.encode(password, process.env.SECRET_ENCRYPT);
+  
+  if(user.password != pw_encoded)
   {
+    console.log(user.password);
     throw new Error("Invalid authentication");
   }
   
@@ -41,5 +50,6 @@ async function loginUser(email, password)
 module.exports = {
   mongoose,
   registerUser,
-  loginUser
+  loginUser,
+  UserSchema
 }
