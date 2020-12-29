@@ -25,7 +25,7 @@ function mealTimeHTML(list, nameOfMealTime) {
     mealsAtTimeContainer.classList.add(`${nameOfMealTime}`);
 
     list = list.map((food) => {
-        return `<a href="#"><img src="
+        return `<a href="${food.foodURL}"><img src="
     ${food.imgSrc||"https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png"}
     "></a>
     <p>${food.name}</p>

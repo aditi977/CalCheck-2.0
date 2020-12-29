@@ -118,7 +118,7 @@ app.get("/history", async (req, res) => {
 
 
     const user = await getCurrentUser("test")
-    res.render("history.ejs", { user, loggedin: true });
+    res.render("history.ejs", { user, loggedin: isAuthenticated(req) });
 });
 app.get("/search", (req, res) => {
     let searchURL = new URL("https://trackapi.nutritionix.com/v2/search/instant");

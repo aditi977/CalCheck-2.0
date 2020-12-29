@@ -27,6 +27,7 @@
                     const formattedDate = formatmdy(date)
                     const food = {
                         time: getTimeOfDay(date),
+                        foodURL: foodInHistory.foodURL,
                         name: foodInHistory.foodName,
                         nutritionixId:foodInHistory.nutritionixId,
                         imgSrc:foodInHistory.imgSrc,
@@ -46,8 +47,10 @@
                     }
                 }
                 for (var dateInfo of eatenHistory) {
-                    body.appendChild(displayDateEaten(dateInfo));
+                    body.prepend(displayDateEaten(dateInfo));
                 }
+
+                //not logged in
             }else{
                 const nothingToSeeDiv = document.createElement("div");
                 nothingToSeeDiv.attributes="center"
@@ -107,12 +110,16 @@
     </div>
 
     <script>
-        
-
-        
-
-
-
+        $(document).ready(function () {
+            const body = document.querySelector("#nav-menu");
+            if (<%- loggedin %>) {  
+                // document.getElementById('account-settings').style.display = "inline-block";
+                $(".dropdown").css( "display", "inline-block");
+            } else {
+                // document.getElementById('account-settings').style.display = "none";
+                $(".dropdown").css( "display", "none");
+            }
+        });
     </script>
     <script src="/load-footer.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>

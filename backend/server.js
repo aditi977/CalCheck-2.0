@@ -56,8 +56,7 @@ async function loginUser(email, password)
 async function getCurrentUser(email)
 {
   const user = await Person.findOne({ email }).exec();
-  console.log("Get current user")
-  console.log(user)
+  // console.log(user)
   return user;
 }
 
@@ -73,7 +72,21 @@ async function addFoodToCurrentUser(email, foodName, foodURL, imgSrc, calories) 
       }
     }
   });
-  console.log(user);
+  // console.log(user);
+}
+
+async function removeFoodFromCurrentUser(email, removedFoodId)
+{
+  const user = await Person.findOneAndUpdate({ email }, {
+    $pull: {
+      eatenHistory:
+      {
+        _id: removedFoodId
+      }
+    }
+  });
+  
+  // console.log(user);
 }
 
 module.exports = {

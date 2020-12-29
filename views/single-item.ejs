@@ -60,7 +60,9 @@
                     style="position:absolute;bottom:0;display:block;width:100%;transform: translateY(-50%);">
                 <img src="/img/scale.png" style="display:block; width:100%;position: absolute;bottom:0;z-index: -1;">
             </div>
-            <button onclick="addFoodToCurrentUser()">Add food</button>
+            <% if (loggedin) { %>
+                <button onclick="addFoodToCurrentUser()">Add food</button>
+              <% } %>
             <section class="nutrition-facts" style="overflow: hidden;">
 
                 <!-- <hr/>
@@ -230,6 +232,18 @@
         xhr.setRequestHeader("Content-type","application/json");
         xhr.send(JSON.stringify(json));
     }
+</script>
+<script>
+    $(document).ready(function () {
+        const body = document.querySelector("#nav-menu");
+        if (<%- loggedin %>) {  
+            // document.getElementById('account-settings').style.display = "inline-block";
+            $(".dropdown").css( "display", "inline-block");
+        } else {
+            // document.getElementById('account-settings').style.display = "none";
+            $(".dropdown").css( "display", "none");
+        }
+    });
 </script>
 <script src="/load-footer.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
