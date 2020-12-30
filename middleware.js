@@ -118,6 +118,7 @@ app.get("/history", async (req, res) => {
 
 
     const user = await getCurrentUser("test")
+    console.log(user)
     res.render("history.ejs", { user, loggedin: isAuthenticated(req) });
 });
 app.get("/search", (req, res) => {

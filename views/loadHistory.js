@@ -1,8 +1,10 @@
 function getTimeOfDay(time) {
     const hour = time.getHours()
-    if (hour > 3 && hour < 12) {
+    console.log(time)
+    console.log(hour)
+    if (hour >=0 && hour < 11) {
         return "breakfast"
-    } else if (hour > 11 && hour < 3) {
+    } else if (hour >= 11 && hour < 3) {
         return "lunch"
     } else {
         return "dinner"
