@@ -63,6 +63,7 @@
             <% if (loggedin) { %>
                 <button onclick="addFoodToCurrentUser()">Add food</button>
               <% } %>
+            <span style="opacity:0;" id="foodAddedNoti">Food added</span>
             <section class="nutrition-facts" style="overflow: hidden;">
 
                 <!-- <hr/>
@@ -220,6 +221,7 @@
 </body>
 <script>
     var xhr = new XMLHttpRequest();
+    const foodAddedNoti = document.getElementById("foodAddedNoti");
     function addFoodToCurrentUser() {
         const foodInfo = {
             name:<%- `\"${food.food_name}\"` %>,
@@ -231,6 +233,12 @@
         xhr.open("POST", "/add-food", true);
         xhr.setRequestHeader("Content-type","application/json");
         xhr.send(JSON.stringify(foodInfo));
+
+        foodAddedNoti.classList.add("addNoti");
+        setTimeout(function(){ 
+            foodAddedNoti.classList.remove("addNoti");
+        }, 3000);
+         
     }
 </script>
 <script>

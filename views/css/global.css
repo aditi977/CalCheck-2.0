@@ -110,8 +110,19 @@ li .badge {
   margin-top: 20px;
 }
 
+.addNoti {
+  animation: fadeInOut 2s ease reverse forwards;
+}
+
 form > input{
     font-size: 1.5em;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0 }
+  25% { opacity: 1 }
+  75% { opacity: 1 }
+  100% { opacity: 0 }
 }
 
 @media screen and (min-width: 920px) {
