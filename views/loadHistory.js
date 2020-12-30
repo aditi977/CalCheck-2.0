@@ -26,13 +26,16 @@ function mealTimeHTML(list, nameOfMealTime) {
 
     list = list.map((food) => {
         console.log(food._id)
-        return `<a href="${food.foodURL}">
+        return `
+        <div id="${food._id}">
+        <a href="${food.foodURL}">
         <img src="
         ${food.imgSrc||"https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png"}
         "></a>
         <button onclick=removeFoodFromCurrentUser("${food._id}")>Remove food</button>
-    <p>${food.name}</p>
-    <p>${food.calories} calories</p>`;
+        <p>${food.name}</p>
+        <p>${food.calories} calories</p>
+        </div>`;
     });
 
     mealsAtTimeContainer.innerHTML = list.join("");
@@ -83,4 +86,6 @@ function removeFoodFromCurrentUser(removedFoodId)
     xhr.open("POST", "/remove-food", true);
     xhr.setRequestHeader("Content-type","application/json");
     xhr.send(JSON.stringify(foodInfo));
+    //make removed food block disappear
+    document.getElementById(removedFoodId).style.display = "none";
 }

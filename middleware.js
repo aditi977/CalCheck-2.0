@@ -45,9 +45,6 @@ app.get('/test-mongoose', function (req, res) {
     res.json({ isMongooseOk: true })
 });
 
-app.get("/", (req, res) => {
-    res.render("index.ejs", { loggedin: isAuthenticated(req) })
-});
 
 //Remove this later, I'm lazy
 app.get("/index.html", (req, res) => {
@@ -60,7 +57,7 @@ app.get("/login", (req, res) => {
 app.post("/user/register", (req, res) => {
     registerUser(req.body.name, req.body.email, req.body.password, []);
     res.redirect("/login");
-
+    
 });
 app.post("/user/login", async function (req, res, next) {
     try {
@@ -70,14 +67,14 @@ app.post("/user/login", async function (req, res, next) {
         
         const token = jwt.sign({email}, process.env.ACCESS_TOKEN_SECRET);
         req.session.autho = "Bearer " + token;
-
-
+        
+        
         
         res.redirect("/");
     } catch (err) {
         next(err);
     }
-
+    
     
 });
 app.get("/suggestions", (req, res) => {
@@ -92,53 +89,54 @@ app.get("/logout", (req, res) => {
 });
 app.get("/history", async (req, res) => {
     // const jsonFetch = {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Accept': 'application/json',
-    //         'Authorization': `Bearer ${req.session.autho}`
-    //     },
-    //     body: JSON.stringify({
-    //         query: `{
-    //             user {
-    //               name
-    //               foods {
-    //                 name
-    //                 date
-    //                 nutritionixId
-    //                 isCommonFood
-    //                 imgSrc
-    //                 calories
-    //               }
-    //             }
-    //           }
-    //           `,
-    //     })
-    // };
-
-
-    const user = await getCurrentUser("test")
-    res.render("history.ejs", { user, loggedin: isAuthenticated(req) });
+        //     method: 'POST',
+        //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Accept': 'application/json',
+            //         'Authorization': `Bearer ${req.session.autho}`
+            //     },
+            //     body: JSON.stringify({
+                //         query: `{
+                    //             user {
+                        //               name
+                        //               foods {
+                            //                 name
+                            //                 date
+                            //                 nutritionixId
+                            //                 isCommonFood
+                            //                 imgSrc
+                            //                 calories
+                            //               }
+                            //             }
+                            //           }
+                            //           `,
+                            //     })
+                            // };
+                            
+                            
+                            const user = await getCurrentUser("test")
+                            res.render("history.ejs", { user, loggedin: isAuthenticated(req) });
+                        });
+                        app.get("/search", (req, res) => {
+                            let searchURL = new URL("https://trackapi.nutritionix.com/v2/search/instant");
+                            let params = { query: req.query['search-key'] };
+                            searchURL.search = new URLSearchParams(params).toString();
+                            fetch(searchURL, {
+                                method: "GET",
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                    'x-app-id': 'dc50e0ed',
+                                    'x-app-key': 'e4ba8175f2f600d999e22b205a8e402c'
+                                }
+                            }).then(res => res.json())
+    .then(data => {
+        res.render("post-search.ejs", { searchedFoods: data.common.concat(data.branded), loggedin: isAuthenticated(req) })
+    })
+    .catch(err => res.send(err));
+    
 });
-app.get("/search", (req, res) => {
-    let searchURL = new URL("https://trackapi.nutritionix.com/v2/search/instant");
-    let params = { query: req.query['search-key'] };
-    searchURL.search = new URLSearchParams(params).toString();
-    fetch(searchURL, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'x-app-id': 'dc50e0ed',
-            'x-app-key': 'e4ba8175f2f600d999e22b205a8e402c'
-        }
-    }).then(res => res.json())
-        .then(data => {
-            res.render("post-search.ejs", { searchedFoods: data.common.concat(data.branded), loggedin: isAuthenticated(req) })
-        })
-        .catch(err => res.send(err));
 
-});
 
 
 function findNutrientsValue(full_nutrients) {
@@ -146,11 +144,11 @@ function findNutrientsValue(full_nutrients) {
         const attr = full_nutrients.find(elem => elem.attr_id === attr_id);
         if (attr) return attr.value
         return 0;
-
+        
     }
 }
 app.get("/food/name/:foodname", (req, res) => {
-
+    
     fetch("https://trackapi.nutritionix.com/v2/natural/nutrients", {
         method: "POST",
         headers: {
@@ -163,17 +161,17 @@ app.get("/food/name/:foodname", (req, res) => {
             query: req.params.foodname
         })
     }).then(res => res.json())
-        .then(data => {
-            const { full_nutrients, ...food } = data.foods[0]
-            res.render("single-item.ejs", { food, foodURL: `/food/id/${req.params.foodname}`, nfByCode: findNutrientsValue(full_nutrients), loggedin: isAuthenticated(req) })
-        }
-        )
-        .catch(err => res.send(err));
+    .then(data => {
+        const { full_nutrients, ...food } = data.foods[0]
+        res.render("single-item.ejs", { food, foodURL: `/food/id/${req.params.foodname}`, nfByCode: findNutrientsValue(full_nutrients), loggedin: isAuthenticated(req) })
+    }
+    )
+    .catch(err => res.send(err));
 })
 
 
 app.get("/food/id/:id", (req, res) => {
-
+    
     fetch(`https://trackapi.nutritionix.com/v2/search/item?nix_item_id=${req.params.id}`, {
         method: "GET",
         headers: {
@@ -183,33 +181,33 @@ app.get("/food/id/:id", (req, res) => {
             "x-app-key": "e4ba8175f2f600d999e22b205a8e402c"
         }
     }).then(res => res.json())
-        .then(data => {
+    .then(data => {
             const { full_nutrients, ...food } = data.foods[0]
             res.render("single-item.ejs", { food, foodURL: `/food/id/${req.params.id}`, nfByCode: findNutrientsValue(full_nutrients), loggedin: isAuthenticated(req) })
         }
         )
         .catch(err => res.send(err));
-})
-
-
-var Person = mongoose.model("Person", UserSchema)
-
-app.get('/account-settings', authenticateToken, async (req, res) => {
+    })
     
-    const user = await Person.findOne({email: req.user.email}).exec();
-    res.render("account-settings.ejs", user);
+
+    var Person = mongoose.model("Person", UserSchema)
     
-})
-
-
-function authenticateToken(req, res, next){
-
-    const authHeader = req.session.autho;
-    const token = authHeader && authHeader.split(' ')[1];
-    if(token == null) return res.sendStatus('401');
-
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) =>{
-        if(err) return res.sendStatus('403'); 
+    app.get('/account-settings', authenticateToken, async (req, res) => {
+        
+        const user = await Person.findOne({email: req.user.email}).exec();
+        res.render("account-settings.ejs", user);
+        
+    })
+    
+    
+    function authenticateToken(req, res, next){
+        
+        const authHeader = req.session.autho;
+        const token = authHeader && authHeader.split(' ')[1];
+        if(token == null) return res.sendStatus('401');
+        
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) =>{
+            if(err) return res.sendStatus('403'); 
         req.user = user;
         next();
     });
@@ -219,9 +217,15 @@ app.post("/add-food", async (req, res) => {
     addFoodToCurrentUser("test", req.body.name, req.body.foodURL, req.body.imgSrc, req.body.calories);
 });
 
-app.post("/remove-food", async (req,res) => {
+app.post("/remove-food", async (req,res,next) => {
     removeFoodFromCurrentUser("test", req.body._id);
+    console.log("remove")
+    // res.redirect("/");
 })
+
+app.get("/", (req, res) => {
+    res.render("index.ejs", { loggedin: isAuthenticated(req) })
+});
 
 // Not found middleware
 app.use((req, res, next) => {

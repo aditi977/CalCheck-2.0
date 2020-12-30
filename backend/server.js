@@ -85,8 +85,8 @@ async function removeFoodFromCurrentUser(email, removedFoodId)
       }
     }
   });
+  console.log(user);
   
-  // console.log(user);
 }
 
 module.exports = {
@@ -94,6 +94,7 @@ module.exports = {
   registerUser,
   loginUser,
   removeFoodFromCurrentUser,
+  addFoodToCurrentUser,
   getCurrentUser,
   UserSchema,
 }
