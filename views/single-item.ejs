@@ -221,16 +221,16 @@
 <script>
     var xhr = new XMLHttpRequest();
     function addFoodToCurrentUser() {
-        const json = {
+        const foodInfo = {
             name:<%- `\"${food.food_name}\"` %>,
             calories: <%= food.nf_calories %>,
             imgSrc: "<%- `${food.photo.thumb}` %>",
             foodURL: window.location.pathname,
         };
-        console.log(json)
+        console.log(foodInfo)
         xhr.open("POST", "/add-food", true);
         xhr.setRequestHeader("Content-type","application/json");
-        xhr.send(JSON.stringify(json));
+        xhr.send(JSON.stringify(foodInfo));
     }
 </script>
 <script>

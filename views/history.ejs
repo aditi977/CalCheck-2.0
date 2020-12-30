@@ -26,6 +26,7 @@
                     const date = new Date(foodInHistory.date)
                     const formattedDate = formatmdy(date)
                     const food = {
+                        _id: foodInHistory._id,
                         time: getTimeOfDay(date),
                         foodURL: foodInHistory.foodURL,
                         name: foodInHistory.foodName,

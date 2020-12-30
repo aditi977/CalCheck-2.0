@@ -93,7 +93,7 @@ module.exports = {
   mongoose,
   registerUser,
   loginUser,
-  addFoodToCurrentUser,
+  removeFoodFromCurrentUser,
   getCurrentUser,
   UserSchema,
 }

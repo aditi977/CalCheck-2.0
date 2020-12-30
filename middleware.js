@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const { mongoose, registerUser, loginUser, addFoodToCurrentUser, getCurrentUser } = require("./backend/server")
+const { mongoose, registerUser, loginUser, addFoodToCurrentUser, getCurrentUser, removeFoodFromCurrentUser } = require("./backend/server")
 const fetch = require("node-fetch");
 const session = require("express-session")
 const { URL, URLSearchParams } = require('url')
@@ -91,34 +91,33 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
 });
 app.get("/history", async (req, res) => {
-    const jsonFetch = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${req.session.autho}`
-        },
-        body: JSON.stringify({
-            query: `{
-                user {
-                  name
-                  foods {
-                    name
-                    date
-                    nutritionixId
-                    isCommonFood
-                    imgSrc
-                    calories
-                  }
-                }
-              }
-              `,
-        })
-    };
+    // const jsonFetch = {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json',
+    //         'Authorization': `Bearer ${req.session.autho}`
+    //     },
+    //     body: JSON.stringify({
+    //         query: `{
+    //             user {
+    //               name
+    //               foods {
+    //                 name
+    //                 date
+    //                 nutritionixId
+    //                 isCommonFood
+    //                 imgSrc
+    //                 calories
+    //               }
+    //             }
+    //           }
+    //           `,
+    //     })
+    // };
 
 
     const user = await getCurrentUser("test")
-    console.log(user)
     res.render("history.ejs", { user, loggedin: isAuthenticated(req) });
 });
 app.get("/search", (req, res) => {
@@ -219,6 +218,10 @@ app.post("/add-food", async (req, res) => {
     console.log(req.body)
     addFoodToCurrentUser("test", req.body.name, req.body.foodURL, req.body.imgSrc, req.body.calories);
 });
+
+app.post("/remove-food", async (req,res) => {
+    removeFoodFromCurrentUser("test", req.body._id);
+})
 
 // Not found middleware
 app.use((req, res, next) => {
