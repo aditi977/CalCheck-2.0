@@ -61,8 +61,8 @@ async function getCurrentUser(email)
 }
 
 async function addFoodToCurrentUser(email, foodName, foodURL, imgSrc, calories) {
-  console.log(foodURL)
-  const user = await Person.findOneAndUpdate({ email }, {
+  // const user = await Person.findOneAndUpdate({ email }, {
+  await Person.findOneAndUpdate({ email }, {
     $push: {
       eatenHistory:{
         foodName,
@@ -77,7 +77,8 @@ async function addFoodToCurrentUser(email, foodName, foodURL, imgSrc, calories) 
 
 async function removeFoodFromCurrentUser(email, removedFoodId)
 {
-  const user = await Person.findOneAndUpdate({ email }, {
+  // const user = await Person.findOneAndUpdate({ email }, {
+  await Person.findOneAndUpdate({ email }, {
     $pull: {
       eatenHistory:
       {
@@ -85,7 +86,7 @@ async function removeFoodFromCurrentUser(email, removedFoodId)
       }
     }
   });
-  console.log(user);
+  // console.log(user);
   
 }
 

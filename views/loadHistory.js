@@ -1,6 +1,6 @@
 function getTimeOfDay(time) {
     const hour = time.getHours()
-    if (hour >=0 && hour < 11) {
+    if (hour >= 0 && hour < 11) {
         return "breakfast"
     } else if (hour >= 11 && hour < 3) {
         return "lunch"
@@ -30,7 +30,7 @@ function mealTimeHTML(list, nameOfMealTime) {
         <div id="${food._id}">
         <a href="${food.foodURL}">
         <img src="
-        ${food.imgSrc||"https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png"}
+        ${food.imgSrc || "https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png"}
         "></a>
         <button onclick=removeFoodFromCurrentUser("${food._id}")>Remove food</button>
         <p>${food.name}</p>
@@ -76,16 +76,18 @@ function displayDateEaten(dateHistory) {
     return dateSection;
 }
 
-function removeFoodFromCurrentUser(removedFoodId)
-{
+function removeFoodFromCurrentUser(removedFoodId) {
     const xhr = new XMLHttpRequest();
-    const foodInfo = {
-        _id: removedFoodId
-    };
-    console.log(foodInfo)
-    xhr.open("POST", "/remove-food", true);
-    xhr.setRequestHeader("Content-type","application/json");
-    xhr.send(JSON.stringify(foodInfo));
-    //make removed food block disappear
-    document.getElementById(removedFoodId).style.display = "none";
+    const removeConfirmed = confirm("Do you want to remove this item?");
+    if (removeConfirmed == true) {
+        const foodInfo = {
+            _id: removedFoodId
+        };
+        console.log(foodInfo)
+        xhr.open("POST", "/remove-food", true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(foodInfo));
+        //make removed food block disappear
+        document.getElementById(removedFoodId).style.display = "none";
+    }
 }

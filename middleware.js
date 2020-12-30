@@ -219,7 +219,6 @@ app.post("/add-food", async (req, res) => {
 
 app.post("/remove-food", async (req,res,next) => {
     removeFoodFromCurrentUser("test", req.body._id);
-    console.log("remove")
     // res.redirect("/");
 })
 
