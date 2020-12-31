@@ -87,7 +87,7 @@ app.get("/logout", (req, res) => {
     req.session.destroy();
     res.redirect("/");
 });
-app.get("/history", async (req, res) => {
+app.get("/history", authenticateToken, async (req, res) => {
     // const jsonFetch = {
         //     method: 'POST',
         //     headers: {
@@ -112,9 +112,8 @@ app.get("/history", async (req, res) => {
                             //           `,
                             //     })
                             // };
-                            
-                            
-                            const user = await getCurrentUser("test")
+                            console.log(req.user)
+                            const user = await getCurrentUser(req.user.email)
                             res.render("history.ejs", { user, loggedin: isAuthenticated(req) });
                         });
                         app.get("/search", (req, res) => {
@@ -212,13 +211,13 @@ app.get("/food/id/:id", (req, res) => {
         next();
     });
 }
-app.post("/add-food", async (req, res) => {
+app.post("/add-food", authenticateToken, async (req, res) => {
     console.log(req.body)
-    addFoodToCurrentUser("test", req.body.name, req.body.foodURL, req.body.imgSrc, req.body.calories);
+    addFoodToCurrentUser(req.user.email, req.body.name, req.body.foodURL, req.body.imgSrc, req.body.calories);
 });
 
-app.post("/remove-food", async (req,res,next) => {
-    removeFoodFromCurrentUser("test", req.body._id);
+app.post("/remove-food", authenticateToken, async (req,res,next) => {
+    removeFoodFromCurrentUser(req.user.email, req.body._id);
     // res.redirect("/");
 })
 
