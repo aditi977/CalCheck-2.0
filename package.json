@@ -20,7 +20,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node middleware.js",
+    "start": "nodemon middleware.js",
     "devStart": "nodemon backend/server.js"
   },
   "repository": {

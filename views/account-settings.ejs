@@ -44,7 +44,7 @@
 
         <h2 class="subtitle">Account Settings</h2>
         <div style="padding: 20px;"></div>
-        <form id="main-form">
+        <form /*action="/updated"*/ id="main-form">
             <label for="first-name">First Name</label>
             <br>
             <input type="text" id="first-name" name="first-name">
@@ -70,22 +70,27 @@
             <input type="submit" name="submit" value="Save Changes">
         </form>
         
-        <form id="change-pw-form">
+        <form action="user/change-password" id="change-pw-form" method="post">
             <div id="close-button"><ion-icon name="close-circle-outline"></ion-icon></div>
+            <br>
+            <label for="email">Email</label>
+            <br>
+            <input type="email" id="email" name="email">
+            <br>
             <br>
             <label for="old-pw">Old Password</label>
             <br>
-            <input type="password" id="old-pw" name="old-pw">
+            <input type="password" id="old-pw" name="oldPw">
             <br>
             <br>
             <label for="new-pw">New Password</label>
             <br>
-            <input type="password" id="new-pw" name="new-pw">
+            <input type="password" id="new-pw" name="newPw">
             <br>
             <br>
             <label for="rpt-new-pw">Repeat New Password</label>
             <br>
-            <input type="password" id="rpt-new-pw" name="rpt-new-pw">
+            <input type="password" id="rpt-new-pw" name="rptNewPw">
             <br>
             <br>
             <input type="submit" name="submit" value="Submit">

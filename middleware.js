@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const { mongoose, registerUser, loginUser, addFoodToCurrentUser } = require("./backend/server")
+const { mongoose, registerUser, loginUser, addFoodToCurrentUser, changePassword } = require("./backend/server")
 const fetch = require("node-fetch");
 const session = require("express-session")
 const { URL, URLSearchParams } = require('url')
@@ -66,7 +66,7 @@ app.post("/user/login", async function (req, res, next) {
     try {
         req.session.autho = await loginUser(req.body.email, req.body.password);
         const email = req.body.email;
-        const user = await Person.findOne({email: email}).exec();
+        const user = await Person.findOne({email: email}).exec(); //DO WE NEED THIS LINE??
         
         const token = jwt.sign({email}, process.env.ACCESS_TOKEN_SECRET);
         req.session.autho = "Bearer " + token;
@@ -224,9 +224,16 @@ function authenticateToken(req, res, next){
         next();
     });
 }
+
 app.post("/add-food", async (req, res) => {
     addFoodToCurrentUser("chaule19@vt.edu", req.body.name, req.body.foodURL, req.body.imgSrc, req.body.calories);
 });
+
+app.post("/user/change-password", async (req, res) => {
+    console.log(req.body);
+    changePassword(req.body.email, req.body.oldPw, req.body.newPw, req.body.rptNewPw);
+    res.redirect("/");
+})
 
 // Not found middleware
 app.use((req, res, next) => {

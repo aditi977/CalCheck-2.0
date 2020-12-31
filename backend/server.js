@@ -67,10 +67,33 @@ async function addFoodToCurrentUser(email, foodName, foodURL, imgSrc, calories) 
   console.log(user);
 }
 
+// async changePersonalInfo(first, last, email){
+
+// }
+
+async function changePassword(email, currPw, resetPw, retypedResetPw){
+     
+  if(resetPw == retypedResetPw){
+    pw_old = jwt.encode(currPw, process.env.SECRET_ENCRYPT);
+    pw_updated = jwt.encode(resetPw, process.env.SECRET_ENCRYPT);
+    const user = await Person.findOneAndUpdate({email: email, password: pw_old}, {password: pw_updated}, (err)=>{
+      if(err) throw err
+    });
+    console.log(pw_old)
+    const test = await Person.findOne({email: email});
+    console.log(email);
+    console.log(test.password);
+  }
+
+  //WHAT IF NO ENTRIES WERE GIVEN???
+ 
+}
+
 module.exports = {
   mongoose,
   registerUser,
   loginUser,
   UserSchema,
-  addFoodToCurrentUser
+  addFoodToCurrentUser,
+  changePassword
 }
