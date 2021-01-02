@@ -44,22 +44,21 @@
 
         <h2 class="subtitle">Account Settings</h2>
         <div style="padding: 20px;"></div>
-        <form /*action="/updated"*/ id="main-form">
-            <label for="first-name">First Name</label>
+        <form action="user/updated-info" id="main-form" method="post">
+            <label for="name">Name</label>
             <br>
-            <input type="text" id="first-name" name="first-name">
+            <input type="text" id="name" name="name">
             <br>
             <br>
             
-            <label for="last-name">Last Name</label>
+            <!-- <label for="last-name">Last Name</label>
             <br>
-            <input type="text" id="last-name" name="last-name">
-            
+            <input type="text" id="last-name" name="lastName">
             <br>
-            <br>
+            <br> -->
             <label for="email">Email</label>
             <br>
-            <input type="email" id="email" name="email">
+            <input type="email" id="email2" name="email">
             <br>
             <br>
             <label for="pw">Password</label>

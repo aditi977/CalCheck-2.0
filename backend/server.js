@@ -90,12 +90,24 @@ async function removeFoodFromCurrentUser(email, removedFoodId)
   
 }
 
-// async changePersonalInfo(first, last, email){
+async function changePersonalInfo(initEmail, name, email){
+  if(name !== ''){
+    await Person.findOneAndUpdate({email: initEmail}, {name: name}, (err)=>{
+      if(err) throw err
+    });
+  }
 
-// }
+  if(email !== ''){
+    await Person.findOneAndUpdate({email: initEmail}, {email: email},  (err)=>{
+      if(err) throw err
+    });
+  }
+}
 
 async function changePassword(email, currPw, resetPw, retypedResetPw){
-     
+  if (resetPw == null || email == null){
+    throw new Error("Invalid input");
+  }
   if(resetPw == retypedResetPw){
     pw_old = jwt.encode(currPw, process.env.SECRET_ENCRYPT);
     pw_updated = jwt.encode(resetPw, process.env.SECRET_ENCRYPT);
@@ -119,5 +131,8 @@ module.exports = {
   removeFoodFromCurrentUser,
   addFoodToCurrentUser,
   getCurrentUser,
+  changePersonalInfo,
+  changePassword,
   UserSchema,
+
 }

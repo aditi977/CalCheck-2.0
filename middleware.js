@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const { mongoose, registerUser, loginUser, addFoodToCurrentUser, getCurrentUser, removeFoodFromCurrentUser } = require("./backend/server")
+const { mongoose, registerUser, loginUser, addFoodToCurrentUser, getCurrentUser, removeFoodFromCurrentUser, changePassword, changePersonalInfo } = require("./backend/server")
 const fetch = require("node-fetch");
 const session = require("express-session")
 const { URL, URLSearchParams } = require('url')
@@ -200,10 +200,10 @@ app.get("/food/id/:id", (req, res) => {
     
     
     function authenticateToken(req, res, next){
-        
         const authHeader = req.session.autho;
         const token = authHeader && authHeader.split(' ')[1];
-        if(token == null) return res.sendStatus('401');
+        console.log(authHeader)
+       if(token == null) return res.sendStatus('401');
         
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) =>{
             if(err) return res.sendStatus('403'); 
@@ -225,9 +225,12 @@ app.get("/", (req, res) => {
     res.render("index.ejs", { loggedin: isAuthenticated(req) })
 });
 
-app.post("/user/change-password", async (req, res) => {
-    console.log(req.body);
+app.post("/user/change-password", authenticateToken, async (req, res) => {
     changePassword(req.body.email, req.body.oldPw, req.body.newPw, req.body.rptNewPw);
+    res.redirect("/");
+})
+app.post("/user/updated-info", authenticateToken, async (req, res) => {
+    changePersonalInfo(req.user.email, req.body.name, req.body.email);
     res.redirect("/");
 })
 
