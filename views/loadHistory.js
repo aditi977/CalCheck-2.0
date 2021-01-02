@@ -1,8 +1,8 @@
 function getTimeOfDay(time) {
     const hour = time.getHours()
-    if (hour > 3 && hour < 12) {
+    if (hour >= 0 && hour < 11) {
         return "breakfast"
-    } else if (hour > 11 && hour < 3) {
+    } else if (hour >= 11 && hour < 3) {
         return "lunch"
     } else {
         return "dinner"
@@ -25,17 +25,22 @@ function mealTimeHTML(list, nameOfMealTime) {
     mealsAtTimeContainer.classList.add(`${nameOfMealTime}`);
 
     list = list.map((food) => {
-        return `<a href="#"><img src="
-    ${food.imgSrc||"https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png"}
-    "></a>
-    <p>${food.name}</p>
-    <p>${food.calories} calories</p>`;
+        console.log(food._id)
+        return `
+        <div id="${food._id}">
+        <a href="${food.foodURL}">
+        <img src="
+        ${food.imgSrc || "https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png"}
+        "></a>
+        <button onclick=removeFoodFromCurrentUser("${food._id}")>Remove food</button>
+        <p>${food.name}</p>
+        <p>${food.calories} calories</p>
+        </div>`;
     });
 
     mealsAtTimeContainer.innerHTML = list.join("");
     return mealsAtTimeContainer;
 }
-
 
 function displayDateEaten(dateHistory) {
     const dateSection = document.createElement("section");
@@ -69,4 +74,20 @@ function displayDateEaten(dateHistory) {
         .appendChild(mealTimeHTML(mealsAt["dinner"], "dinner"));
     console.log(dateSection);
     return dateSection;
+}
+
+function removeFoodFromCurrentUser(removedFoodId) {
+    const xhr = new XMLHttpRequest();
+    const removeConfirmed = confirm("Do you want to remove this item?");
+    if (removeConfirmed == true) {
+        const foodInfo = {
+            _id: removedFoodId
+        };
+        console.log(foodInfo)
+        xhr.open("POST", "/remove-food", true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(foodInfo));
+        //make removed food block disappear
+        document.getElementById(removedFoodId).style.display = "none";
+    }
 }

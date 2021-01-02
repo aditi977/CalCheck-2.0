@@ -60,7 +60,10 @@
                     style="position:absolute;bottom:0;display:block;width:100%;transform: translateY(-50%);">
                 <img src="/img/scale.png" style="display:block; width:100%;position: absolute;bottom:0;z-index: -1;">
             </div>
-            <button onclick="addFoodToCurrentUser()">Add food</button>
+            <% if (loggedin) { %>
+                <button onclick="addFoodToCurrentUser()">Add food</button>
+              <% } %>
+            <span style="opacity:0;" id="foodAddedNoti">Food added</span>
             <section class="nutrition-facts" style="overflow: hidden;">
 
                 <!-- <hr/>
@@ -218,18 +221,37 @@
 </body>
 <script>
     var xhr = new XMLHttpRequest();
+    const foodAddedNoti = document.getElementById("foodAddedNoti");
     function addFoodToCurrentUser() {
-        const json = {
+        const foodInfo = {
             name:<%- `\"${food.food_name}\"` %>,
             calories: <%= food.nf_calories %>,
             imgSrc: "<%- `${food.photo.thumb}` %>",
             foodURL: window.location.pathname,
         };
-        console.log(json)
+        console.log(foodInfo)
         xhr.open("POST", "/add-food", true);
         xhr.setRequestHeader("Content-type","application/json");
-        xhr.send(JSON.stringify(json));
+        xhr.send(JSON.stringify(foodInfo));
+
+        foodAddedNoti.classList.add("addNoti");
+        setTimeout(function(){ 
+            foodAddedNoti.classList.remove("addNoti");
+        }, 3000);
+         
     }
+</script>
+<script>
+    $(document).ready(function () {
+        const body = document.querySelector("#nav-menu");
+        if (<%- loggedin %>) {  
+            // document.getElementById('account-settings').style.display = "inline-block";
+            $(".dropdown").css( "display", "inline-block");
+        } else {
+            // document.getElementById('account-settings').style.display = "none";
+            $(".dropdown").css( "display", "none");
+        }
+    });
 </script>
 <script src="/load-footer.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>

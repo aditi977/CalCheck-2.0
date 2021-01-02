@@ -14,20 +14,22 @@
     <script>
 
         const eatenHistory = []
-        console.log(<%- JSON.stringify(user.foods) %>)
-        const foodInfoList = <%- JSON.stringify(user.foods) %>;
+        console.log(<%- JSON.stringify(user) %>)
+        const foodInfoList = <%- JSON.stringify(user.eatenHistory) %>;
 
 
         $(document).ready(function () {
             const body = document.querySelector("#content-container");
             if (<%- loggedin %>) {  
                 // console.log();
-                for (let foodInHistory of  <%- JSON.stringify(user.foods) %>) {
+                for (let foodInHistory of  <%- JSON.stringify(user.eatenHistory) %>) {
                     const date = new Date(foodInHistory.date)
                     const formattedDate = formatmdy(date)
                     const food = {
+                        _id: foodInHistory._id,
                         time: getTimeOfDay(date),
-                        name: foodInHistory.name,
+                        foodURL: foodInHistory.foodURL,
+                        name: foodInHistory.foodName,
                         nutritionixId:foodInHistory.nutritionixId,
                         imgSrc:foodInHistory.imgSrc,
                         calories: foodInHistory.calories
@@ -46,8 +48,10 @@
                     }
                 }
                 for (var dateInfo of eatenHistory) {
-                    body.appendChild(displayDateEaten(dateInfo));
+                    body.prepend(displayDateEaten(dateInfo));
                 }
+
+                //not logged in
             }else{
                 const nothingToSeeDiv = document.createElement("div");
                 nothingToSeeDiv.attributes="center"
@@ -107,12 +111,16 @@
     </div>
 
     <script>
-        
-
-        
-
-
-
+        $(document).ready(function () {
+            const body = document.querySelector("#nav-menu");
+            if (<%- loggedin %>) {  
+                // document.getElementById('account-settings').style.display = "inline-block";
+                $(".dropdown").css( "display", "inline-block");
+            } else {
+                // document.getElementById('account-settings').style.display = "none";
+                $(".dropdown").css( "display", "none");
+            }
+        });
     </script>
     <script src="/load-footer.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
