@@ -59,6 +59,9 @@ section {
   margin-bottom: 20px;
 }
 
+button{
+  cursor: pointer;
+}
 
 /*
 .bkfst:hover, .bkfst:active {

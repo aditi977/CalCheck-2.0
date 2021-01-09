@@ -37,6 +37,9 @@
                             <ion-icon name="enter-outline"></ion-icon> <%= loggedin?"Logout":"Login" %>
                         </a>
                     </li>
+                    <li id="account-settings"><a href="/account-settings">
+                        <ion-icon name="settings-outline"></ion-icon> Account Settings
+                    </a></li>
                 <li class="dropdown" onclick="dropdown()"><a class="dropbtn" href="#">
                     <a href="#">
                         <ion-icon name="notifications-outline"></ion-icon>
@@ -105,6 +108,20 @@
         }
 
         searchedFoods.forEach(item => addItem(item))
+
+        //adds the account settings button + link
+
+        $(document).ready(function () {
+            const body = document.querySelector("#nav-menu");
+            if (<%- loggedin %>) {  
+                document.getElementById('account-settings').style.display = "inline-block";
+                $(".dropdown").css( "display", "inline-block");
+            } else {
+                document.getElementById('account-settings').style.display = "none";
+                $(".dropdown").css( "display", "none");
+            }
+        });
+
     </script>
     
     <script src ="/global.js"></script>
