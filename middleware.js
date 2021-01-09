@@ -112,9 +112,7 @@ app.get("/history", authenticateToken, async (req, res) => {
     //           `,
     //     })
     // };
-    console.log(req.user)
-    const user = await getCurrentUser(req.user.email)
-    res.render("history.ejs", { user, loggedin: isAuthenticated(req) });
+    res.render("history.ejs", { user:req.user ? await getCurrentUser(req.user.email):{}, loggedin: isAuthenticated(req) });
 });
 app.get("/search", (req, res) => {
     let searchURL = new URL("https://trackapi.nutritionix.com/v2/search/instant");
@@ -207,14 +205,14 @@ function authenticateToken(req, res, next) {
     console.log(authHeader)
     if (token == null) {
         req.errorCode = 401;
-        // return;
+        return next();
         //    return res.sendStatus('401');
     }
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         // if(err) return res.sendStatus('403'); 
         if (err) {
             req.errorCode = 403;
-            // return;
+            return next();
         }
         req.user = user;
         next();
