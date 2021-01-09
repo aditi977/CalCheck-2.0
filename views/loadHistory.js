@@ -25,7 +25,7 @@ function mealTimeHTML(list, nameOfMealTime) {
     mealsAtTimeContainer.classList.add(`${nameOfMealTime}`);
 
     list = list.map((food) => {
-        console.log(food._id)
+        // //console.log(food._id)
         return `
         <div id="${food._id}">
         <a href="${food.foodURL}">
@@ -72,7 +72,7 @@ function displayDateEaten(dateHistory) {
     dateSection
         .querySelector("div")
         .appendChild(mealTimeHTML(mealsAt["dinner"], "dinner"));
-    console.log(dateSection);
+    //console.log(dateSection);
     return dateSection;
 }
 
@@ -83,7 +83,7 @@ function removeFoodFromCurrentUser(removedFoodId) {
         const foodInfo = {
             _id: removedFoodId
         };
-        console.log(foodInfo)
+        //console.log(foodInfo)
         xhr.open("POST", "/remove-food", true);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send(JSON.stringify(foodInfo));

@@ -112,7 +112,6 @@ app.get("/history", authenticateToken, async (req, res) => {
                             //           `,
                             //     })
                             // };
-                            console.log(req.user)
                             const user = await getCurrentUser(req.user.email)
                             res.render("history.ejs", { user, loggedin: isAuthenticated(req) });
                         });
@@ -202,7 +201,6 @@ app.get("/food/id/:id", (req, res) => {
     function authenticateToken(req, res, next){
         const authHeader = req.session.autho;
         const token = authHeader && authHeader.split(' ')[1];
-        console.log(authHeader)
        if(token == null) return res.sendStatus('401');
         
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) =>{
@@ -212,7 +210,6 @@ app.get("/food/id/:id", (req, res) => {
     });
 }
 app.post("/add-food", authenticateToken, async (req, res) => {
-    console.log(req.body)
     addFoodToCurrentUser(req.user.email, req.body.name, req.body.foodURL, req.body.imgSrc, req.body.calories);
 });
 
@@ -261,6 +258,6 @@ app.use((err, req, res, next) => {
 });
 
 const listener = app.listen(process.env.PORT || 3000, () => {
-    console.log("Your app is listening on http://localhost:" + listener.address().port);
+    //console.log("Your app is listening on http://localhost:" + listener.address().port);
 });
 

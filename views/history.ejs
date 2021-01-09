@@ -14,14 +14,14 @@
     <script>
 
         const eatenHistory = []
-        console.log(<%- JSON.stringify(user) %>)
+        // //console.log(<%- JSON.stringify(user) %>)
         const foodInfoList = <%- JSON.stringify(user.eatenHistory) %>;
 
 
         $(document).ready(function () {
             const body = document.querySelector("#content-container");
             if (<%- loggedin %>) {  
-                // console.log();
+                // //console.log();
                 for (let foodInHistory of  <%- JSON.stringify(user.eatenHistory) %>) {
                     const date = new Date(foodInHistory.date)
                     const formattedDate = formatmdy(date)
@@ -34,7 +34,7 @@
                         imgSrc:foodInHistory.imgSrc,
                         calories: foodInHistory.calories
                     }
-                    // console.log(food);
+                    // //console.log(food);
                     const existingDate = eatenHistory.find(eachDate => eachDate.date === formattedDate)
                     if (existingDate) {
                         existingDate.foodList.push(food)

@@ -211,7 +211,7 @@
                                 <th style="vertical-align: baseline; border: none;">*</th>
                                 <td class="no-border" colspan="3" style=" border:none;text-align: left;">The % Daily
                                     Value (DV) tells you how much nutrient in a serving of food contributes to a daily
-                                    diet 2,000 calories a day is used for general nutrition advice.</td>
+                                    diet. 2,000 calories a day is used for general nutrition advice.</td>
                             </tr>
                 </table>
             </section>
@@ -229,7 +229,7 @@
             imgSrc: "<%- `${food.photo.thumb}` %>",
             foodURL: window.location.pathname,
         };
-        console.log(foodInfo)
+        // //console.log(foodInfo)
         xhr.open("POST", "/add-food", true);
         xhr.setRequestHeader("Content-type","application/json");
         xhr.send(JSON.stringify(foodInfo));
