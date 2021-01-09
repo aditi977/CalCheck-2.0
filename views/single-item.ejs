@@ -29,8 +29,8 @@
             <ul>
 
                 <li>
-                    <a href="/login">
-                        <ion-icon name="enter-outline"></ion-icon> Login
+                    <a href=<%= loggedin?"/logout":"/login" %>>
+                        <ion-icon name="enter-outline"></ion-icon> <%= loggedin?"Logout":"Login" %>
                     </a>
                 </li>
 
