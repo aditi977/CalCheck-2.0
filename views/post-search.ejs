@@ -37,6 +37,9 @@
                             <ion-icon name="enter-outline"></ion-icon> <%= loggedin?"Logout":"Login" %>
                         </a>
                     </li>
+                    <li id="account-settings"><a href="/account-settings">
+                        <ion-icon name="settings-outline"></ion-icon> Account Settings
+                    </a></li>
                 <li class="dropdown" onclick="dropdown()"><a class="dropbtn" href="#">
                     <a href="#">
                         <ion-icon name="notifications-outline"></ion-icon>
@@ -55,7 +58,7 @@
 	<div class="food-search-container" style="background-color: #16a085;">
 		<form id="search-form" action="/search" method="GET" style="padding:35px">
 			<input class="search-bar" name="search-key" type="text" placeholder="What did you eat?" required>
-			<input class="search-button" type="submit" form="search-form" value="&#128269;">
+			<button class="search-button" form="search-form" type="submit"><ion-icon style="font-size: 1.8em;" name="search-outline"></ion-icon></button>
 				<!-- <ion-icon name="search-outline"></ion-icon> -->
         </input>
 		</form>
@@ -88,7 +91,7 @@
         
 
         const searchedFoods = <%- JSON.stringify(searchedFoods) %>;
-        console.log(searchedFoods)
+        //console.log(searchedFoods)
 
         function addItem(item){
             const itemContainer = document.createElement("a");
@@ -105,6 +108,20 @@
         }
 
         searchedFoods.forEach(item => addItem(item))
+
+        //adds the account settings button + link
+
+        $(document).ready(function () {
+            const body = document.querySelector("#nav-menu");
+            if (<%- loggedin %>) {  
+                document.getElementById('account-settings').style.display = "inline-block";
+                $(".dropdown").css( "display", "inline-block");
+            } else {
+                document.getElementById('account-settings').style.display = "none";
+                $(".dropdown").css( "display", "none");
+            }
+        });
+
     </script>
     
     <script src ="/global.js"></script>

@@ -34,7 +34,7 @@
                         imgSrc:foodInHistory.imgSrc,
                         calories: foodInHistory.calories
                     }
-                    // console.log(food);
+                    // //console.log(food);
                     const existingDate = eatenHistory.find(eachDate => eachDate.date === formattedDate)
                     if (existingDate) {
                         existingDate.foodList.push(food)
@@ -78,15 +78,10 @@
                         <ion-icon name="home-outline"></ion-icon> Home
                     </a>
                 </li>
-                <li>
-                    <a href="/suggestions">
+                <li class="suggestions">
+                    <a href="/suggestions" >
                         <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
                         Suggestions
-                    </a>
-                </li>
-                <li>
-                    <a href=<%= loggedin?"/logout":"/login" %> style="padding:5px">
-                        <ion-icon name="enter-outline"></ion-icon> <%= loggedin?"Logout":"Login" %>
                     </a>
                 </li>
                 <li class="dropdown" onclick="dropdown()"><a class="dropbtn" href="#">
@@ -100,6 +95,11 @@
                             <a href="#">Notification 2</a>
                             <a href="#">Notification 3</a>
                         </div>
+                </li>
+                <li>
+                    <a href=<%= loggedin?"/logout":"/login" %> style="padding:5px">
+                        <ion-icon name="enter-outline"></ion-icon> <%= loggedin?"Logout":"Login" %>
+                    </a>
                 </li>
             </ul>
         </nav>
@@ -117,9 +117,12 @@
             if (<%- loggedin %>) {  
                 // document.getElementById('account-settings').style.display = "inline-block";
                 $(".dropdown").css( "display", "inline-block");
+                $(".suggestions").css( "display", "inline-block");
+
             } else {
                 // document.getElementById('account-settings').style.display = "none";
                 $(".dropdown").css( "display", "none");
+                $(".suggestions").css( "display", "none");
             }
         });
     </script>

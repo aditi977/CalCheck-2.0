@@ -27,25 +27,31 @@
 
         <nav class="nav-menu">
             <ul>
-
+        
+                <li><a href="/history">
+                    <ion-icon name="book-outline"></ion-icon> History
+                </a></li>
+                <li><a href="/suggestions">
+                    <ion-icon name="chatbubble-ellipses-outline"></ion-icon> Suggestions
+                </a></li>
+                <li class="dropdown" onclick="dropdown()"><a class="dropbtn" href="#">
+                    <a href="#">
+                        <ion-icon name="notifications-outline"></ion-icon>
+                        Notifications
+                    </a>
+                    <span class="badge">3</span>
+                    <div class="dropdown-content">
+                        <a href="#">Notification 1</a>
+                        <a href="#">Notification 2</a>
+                        <a href="#">Notification 3</a>
+                    </div>
+            </li>
                 <li>
                     <a href=<%= loggedin?"/logout":"/login" %>>
                         <ion-icon name="enter-outline"></ion-icon> <%= loggedin?"Logout":"Login" %>
                     </a>
                 </li>
-
-                <li class="dropdown" onclick="dropdown()"><a class="dropbtn" href="#">
-                        <a href="#">
-                            <ion-icon name="notifications-outline"></ion-icon>
-                            Notifications
-                        </a>
-                        <span class="badge">3</span>
-                        <div class="dropdown-content">
-                            <a href="#">Notification 1</a>
-                            <a href="#">Notification 2</a>
-                            <a href="#">Notification 3</a>
-                        </div>
-                </li>
+                
             </ul>
 
         </nav>
@@ -60,7 +66,7 @@
                 <img src="/img/scale.png" style="display:block; width:100%;bottom:0;z-index: -1;">
                 <div style="text-align: center;">
                     <% if (loggedin) { %>
-                        <button id="addFoodBtn" class="theme" onclick="addFoodToCurrentUser()">
+                        <button id="addFoodBtn" style="cursor:pointer;" class="theme" onclick="addFoodToCurrentUser()">
                             <ion-icon name="restaurant-outline"></ion-icon> Add food
                         </button>
                         <div style="opacity:0;" id="foodAddedNoti">Food added</div>
@@ -214,7 +220,7 @@
                                 <th style="vertical-align: baseline; border: none;">*</th>
                                 <td class="no-border" colspan="3" style=" border:none;text-align: left;">The % Daily
                                     Value (DV) tells you how much nutrient in a serving of food contributes to a daily
-                                    diet 2,000 calories a day is used for general nutrition advice.</td>
+                                    diet. 2,000 calories a day is used for general nutrition advice.</td>
                             </tr>
                 </table>
             </section>
@@ -235,7 +241,7 @@
             imgSrc: "<%- `${food.photo.thumb}` %>",
             foodURL: window.location.pathname,
         };
-        console.log(foodInfo)
+        // //console.log(foodInfo)
         xhr.open("POST", "/add-food", true);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send(JSON.stringify(foodInfo));

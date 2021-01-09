@@ -218,7 +218,6 @@ function authenticateToken(req, res, next) {
     });
 }
 app.post("/add-food", authenticateToken, async (req, res) => {
-    console.log(req.body)
     addFoodToCurrentUser(req.user.email, req.body.name, req.body.foodURL, req.body.imgSrc, req.body.calories);
 });
 
@@ -267,6 +266,6 @@ app.use((err, req, res, next) => {
 });
 
 const listener = app.listen(process.env.PORT || 3000, () => {
-    console.log("Your app is listening on http://localhost:" + listener.address().port);
+    //console.log("Your app is listening on http://localhost:" + listener.address().port);
 });
 

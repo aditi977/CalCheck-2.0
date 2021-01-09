@@ -56,7 +56,7 @@ async function loginUser(email, password)
 async function getCurrentUser(email)
 {
   const user = await Person.findOne({ email }).exec();
-  // console.log(user)
+  // //console.log(user)
   return user;
 }
 
@@ -72,7 +72,7 @@ async function addFoodToCurrentUser(email, foodName, foodURL, imgSrc, calories) 
       }
     }
   });
-  // console.log(user);
+  // //console.log(user);
 }
 
 async function removeFoodFromCurrentUser(email, removedFoodId)
@@ -86,7 +86,7 @@ async function removeFoodFromCurrentUser(email, removedFoodId)
       }
     }
   });
-  // console.log(user);
+  // //console.log(user);
   
 }
 
@@ -114,10 +114,10 @@ async function changePassword(email, currPw, resetPw, retypedResetPw){
     const user = await Person.findOneAndUpdate({email: email, password: pw_old}, {password: pw_updated}, (err)=>{
       if(err) throw err
     });
-    console.log(pw_old)
+    // //console.log(pw_old)
     const test = await Person.findOne({email: email});
-    console.log(email);
-    console.log(test.password);
+    // //console.log(email);
+    // //console.log(test.password);
   }
 
   //WHAT IF NO ENTRIES WERE GIVEN???

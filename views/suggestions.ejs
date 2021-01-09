@@ -1,139 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&display=swap"
-      rel="stylesheet"
-    />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="/css/global.css" />
-    <link rel="stylesheet" href="/css/header.css" />
-    <link rel="stylesheet" href="/css/suggestions_style.css" />
-    <link rel="stylesheet" href="/css/ext/grid.css" />
 
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/header.css" />
+  <link rel="stylesheet" href="/css/suggestions_style.css" />
+  <link rel="stylesheet" href="/css/ext/grid.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <title>Suggestions</title>
-  </head>
+  <title>Suggestions</title>
+</head>
 
-  <body>
-    <header>
-		<h1>
-			<a href="/">
-				<img class="logo" src="/img/logo.png"> <span>CalCheck</span>
-			</a>
-		</h1>
+<body>
+  <header>
+    <h1>
+      <a href="/">
+        <img class="logo" src="/img/logo.png"> <span>CalCheck</span>
+      </a>
+    </h1>
 
-		<nav class="nav-menu">
-			<ul>
-                <li><a href="/">
-                    <ion-icon name="home-outline"></ion-icon> Home
-                </a></li>
-                <li><a href="/history">
-                    <ion-icon name="book-outline"></ion-icon> History
-                </a></li>
-				<li>
-                    <a href=<%= loggedin?"/logout":"/login" %>>
-						<ion-icon name="enter-outline"></ion-icon> <%= loggedin?"Logout":"Login" %>
-                    </a>
-                </li>
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="/">
+            <ion-icon name="home-outline"></ion-icon> Home
+          </a></li>
+        <li><a href="/history">
+            <ion-icon name="book-outline"></ion-icon> History
+          </a></li>
+          <li id="account-settings"><a href="/account-settings">
+            <ion-icon name="settings-outline"></ion-icon> Account Settings
+        </a></li>
+        <li class="dropdown" onclick="dropdown()"><a class="dropbtn" href="#">
+            <a href="#">
+              <ion-icon name="notifications-outline"></ion-icon>
+              Notifications
+            </a>
+            <span class="badge">3</span>
+            <div class="dropdown-content">
+              <a href="#">Notification 1</a>
+              <a href="#">Notification 2</a>
+              <a href="#">Notification 3</a>
+            </div>
+        </li>
+        <li>
+          <a href=<%= loggedin?"/logout":"/login" %> style="padding:5px">
+            <ion-icon name="enter-outline"></ion-icon> <%= loggedin?"Logout":"Login" %>
+          </a>
+        </li>
+      </ul>
 
-				<li class="dropdown" onclick="dropdown()">
-                    <a href="#">
-						<ion-icon name="notifications-outline"></ion-icon>
-						Notifications
-                    </a>
-                    <span class="badge">3</span>
-					<div class="dropdown-content">
-						<a href="#">Notification 1</a>
-						<a href="#">Notification 2</a>
-						<a href="#">Notification 3</a>
-					</div>
-				</li>
-			</ul>
+    </nav>
+  </header>
 
-		</nav>
-	</header>
+  <h2 class="subtitle">Suggestions</h2>
+  <div class="content-container">
+    <div class="suggestions">
+      <img src="/img/suggestions/salad.jpg" />
 
-    <h2 class="subtitle">Suggestions</h2>
-    <div class="content-container">
-      <div class="suggestions">
-        <img src="/img/suggestions/salad.jpg" />
+      <h3 class="caption">Salad</h3>
+      <p class="info">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+        minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+        aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+        culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+    </div>
+    <div class="suggestions">
+      <img src="/img/suggestions/salad.jpg" />
+      <h3 class="caption">Salad</h3>
 
-        <h3 class="caption">Salad</h3>
-        <p class="info">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+      <p class="info">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+        minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+        aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+        culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+    </div>
+    <div class="suggestions">
+      <img src="/img/suggestions/salad.jpg" />
+      <h3 class="caption">Salad</h3>
+
+      <p class="info">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+        minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+        aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+        culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+    </div>
+  </div>
+
+  <h2 class="subtitle num-2">More Suggestions</h2>
+  <section class="more-suggestions">
+    <div class="row">
+      <div class="col span-1-of-4 more">
+        <a href="/single-item"><img src="/img/suggestions/granola.jpg" /></a>
+        <p>Granola</p>
       </div>
-      <div class="suggestions">
-        <img src="/img/suggestions/salad.jpg" />
-        <h3 class="caption">Salad</h3>
-
-        <p class="info">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+      <div class="col span-1-of-4 more">
+        <a href="/single-item"><img src="/img/suggestions/strawberry-smoothie.jpg" /></a>
+        <p>Strawberry Smoothie</p>
       </div>
-      <div class="suggestions">
-        <img src="/img/suggestions/salad.jpg" />
-        <h3 class="caption">Salad</h3>
-
-        <p class="info">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+      <div class="col span-1-of-4 more">
+        <a href="/single-item"><img src="/img/suggestions/white-pasta.jpg" /></a>
+        <p>White Pasta</p>
+      </div>
+      <div class="col span-1-of-4 more">
+        <a href="/single-item"><img src="/img/suggestions/celery-juice.jpg" /></a>
+        <p>Celery Juice</p>
       </div>
     </div>
+  </section>
+  <script>
+    $(document).ready(function () {
+            const body = document.querySelector("#nav-menu");
+            if (<%- loggedin %>) {  
+                document.getElementById('account-settings').style.display = "inline-block";
+                $(".dropdown").css( "display", "inline-block");
 
-    <h2 class="subtitle num-2">More Suggestions</h2>
-    <section class="more-suggestions">
-      <div class="row">
-        <div class="col span-1-of-4 more">
-          <a href="/single-item"
-            ><img src="/img/suggestions/granola.jpg"
-          /></a>
-          <p>Granola</p>
-        </div>
-        <div class="col span-1-of-4 more">
-          <a href="/single-item"
-            ><img src="/img/suggestions/strawberry-smoothie.jpg"
-          /></a>
-          <p>Strawberry Smoothie</p>
-        </div>
-        <div class="col span-1-of-4 more">
-          <a href="/single-item"
-            ><img src="/img/suggestions/white-pasta.jpg"
-          /></a>
-          <p>White Pasta</p>
-        </div>
-        <div class="col span-1-of-4 more">
-          <a href="/single-item"
-            ><img src="/img/suggestions/celery-juice.jpg"
-          /></a>
-          <p>Celery Juice</p>
-        </div>
-      </div>
-    </section>
-    <script src="/load-footer.js"></script>
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script src ="/global.js"></script>
-  </body>
+            } else {
+                document.getElementById('account-settings').style.display = "none";
+                $(".dropdown").css( "display", "none");
+
+            }
+        });
+  </script>
+  <script src="/load-footer.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+  <script src="/global.js"></script>
+</body>
+
 </html>
