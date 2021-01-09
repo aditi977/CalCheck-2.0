@@ -3,11 +3,9 @@
   margin: 0px;
 }
 
-
 :root {
   --theme-color: #16a085;
   --theme-btn-color: #1abc9c;
-  
 }
 
 ::selection {
@@ -15,12 +13,12 @@
   color: #f1f1f1;
 }
 
-li{
-    display: inline-block;
-    padding: 10px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
-    margin: 10px 5px;
+li {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  margin: 10px 5px;
 }
 
 a {
@@ -31,8 +29,8 @@ a {
   height: 100%;
 }
 
-.center-text{
-    text-align: center;
+.center-text {
+  text-align: center;
 }
 
 h1 {
@@ -46,15 +44,16 @@ h2 {
   font-weight: 300;
 }
 
-h3{
-    font-size: 1.9em;
+h3 {
+  font-size: 1.9em;
 }
 
-h4{
-    font-size: 1.5em;
+h4 {
+  font-size: 1.5em;
 }
-p{
-    font-size: 1.3em;
+
+p {
+  font-size: 1.3em;
 }
 
 .logo {
@@ -68,18 +67,20 @@ p{
 }
 
 .subtitle {
-    text-align: center;
+  text-align: center;
   color: white;
   background-color: var(--theme-color);
-  padding:50px;
+  padding: 50px;
 }
 
 .tab {
   text-indent: 1.2em;
 }
+
 .notab {
   text-indent: 0px;
 }
+
 footer {
   height: 10vh;
   text-align: center;
@@ -105,6 +106,7 @@ li .badge {
   text-align: center;
   height: auto;
 }
+
 .content-container {
   margin: auto;
   margin-top: 20px;
@@ -114,15 +116,23 @@ li .badge {
   animation: fadeInOut 2s ease reverse forwards;
 }
 
-form > input{
-    font-size: 1.5em;
+form>input {
+  font-size: 1.5em;
 }
 
 @keyframes fadeInOut {
-  0% { opacity: 0 }
-  25% { opacity: 1 }
-  75% { opacity: 1 }
-  100% { opacity: 0 }
+  0% {
+    opacity: 0
+  }
+  25% {
+    opacity: 1
+  }
+  75% {
+    opacity: 1
+  }
+  100% {
+    opacity: 0
+  }
 }
 
 @media screen and (min-width: 920px) {
@@ -130,6 +140,7 @@ form > input{
     width: 80%;
   }
 }
+
 /* 
 @media screen and (min-width: 600px) {
   .content-container {
@@ -141,21 +152,20 @@ form > input{
   .content-container {
     width: 100%;
   }
-
-  h1{
-      font-size: 2.8em;
+  h1 {
+    font-size: 2.8em;
   }
-
-  h2{
+  h2 {
     font-size: 2.2em;
   }
 }
+
 .dropdown-content {
   opacity: 0;
   visibility: hidden;
   width: 95%;
-  left:50%;
-  transform: translate(-50%,0);
+  left: 50%;
+  transform: translate(-50%, 0);
   position: absolute;
   background-color: lightsalmon;
   min-width: 120px;
@@ -170,6 +180,7 @@ form > input{
   text-decoration: none;
   display: block;
 }
+
 .dropdown-content a:hover {
   background-color: darksalmon;
 }
@@ -177,6 +188,18 @@ form > input{
 .dropdown-content.show {
   visibility: visible;
   opacity: 1;
+}
+
+button.theme {
+  border-radius: 4px;
+  background-color: var(--theme-btn-color);
+  border: 0;
+  padding:10px;
+  color:white;
+  transition: background-color 0.2s;
+}
+button.theme:hover {
+  background-color: var(--theme-color);
 }
 
 /* .dropdown:hover .dropbtn {background-color: #16a085} */
