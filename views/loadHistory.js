@@ -32,7 +32,9 @@ function mealTimeHTML(list, nameOfMealTime) {
         <img src="
         ${food.imgSrc || "https://d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png"}
         "></a>
+        <div>
         <button class="theme" onclick=removeFoodFromCurrentUser("${food._id}")><ion-icon name="trash-outline"></ion-icon> Remove food</button>
+        </div>
         <p>${food.name}</p>
         <p>${food.calories} calories</p>
         </div>`;

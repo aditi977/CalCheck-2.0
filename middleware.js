@@ -63,18 +63,17 @@ app.post("/user/login", async function (req, res, next) {
     try {
         req.session.autho = await loginUser(req.body.email, req.body.password);
         const email = req.body.email;
-        const user = await Person.findOne({ email: email }).exec(); //DO WE NEED THIS LINE??
+        const user = await Person.findOne({ email: email }).exec(); //DO WE NEED THIS LINE?? Nope
 
         const token = jwt.sign({ email }, process.env.ACCESS_TOKEN_SECRET);
         req.session.autho = "Bearer " + token;
 
 
-
         res.redirect("/");
     } catch (err) {
+        // return err;
         next(err);
     }
-
 
 });
 app.get("/suggestions", (req, res) => {
