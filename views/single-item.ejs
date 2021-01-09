@@ -27,25 +27,31 @@
 
         <nav class="nav-menu">
             <ul>
-
+        
+                <li><a href="/history">
+                    <ion-icon name="book-outline"></ion-icon> History
+                </a></li>
+                <li><a href="/suggestions">
+                    <ion-icon name="chatbubble-ellipses-outline"></ion-icon> Suggestions
+                </a></li>
+                <li class="dropdown" onclick="dropdown()"><a class="dropbtn" href="#">
+                    <a href="#">
+                        <ion-icon name="notifications-outline"></ion-icon>
+                        Notifications
+                    </a>
+                    <span class="badge">3</span>
+                    <div class="dropdown-content">
+                        <a href="#">Notification 1</a>
+                        <a href="#">Notification 2</a>
+                        <a href="#">Notification 3</a>
+                    </div>
+            </li>
                 <li>
                     <a href=<%= loggedin?"/logout":"/login" %>>
                         <ion-icon name="enter-outline"></ion-icon> <%= loggedin?"Logout":"Login" %>
                     </a>
                 </li>
-
-                <li class="dropdown" onclick="dropdown()"><a class="dropbtn" href="#">
-                        <a href="#">
-                            <ion-icon name="notifications-outline"></ion-icon>
-                            Notifications
-                        </a>
-                        <span class="badge">3</span>
-                        <div class="dropdown-content">
-                            <a href="#">Notification 1</a>
-                            <a href="#">Notification 2</a>
-                            <a href="#">Notification 3</a>
-                        </div>
-                </li>
+                
             </ul>
 
         </nav>
