@@ -29,8 +29,8 @@
             <ul>
 
                 <li>
-                    <a href="/login">
-                        <ion-icon name="enter-outline"></ion-icon> Login
+                    <a href=<%= loggedin?"/logout":"/login" %>>
+                        <ion-icon name="enter-outline"></ion-icon> <%= loggedin?"Logout":"Login" %>
                     </a>
                 </li>
 
@@ -55,15 +55,18 @@
     <div>
 
         <div class="content-container">
-            <div class="scale-container" style=" width: 300px; height: 400px;position: relative;">
-                <img class="" src="<%- `${food.photo.thumb}` %>"
-                    style="position:absolute;bottom:0;display:block;width:100%;transform: translateY(-50%);">
-                <img src="/img/scale.png" style="display:block; width:100%;position: absolute;bottom:0;z-index: -1;">
+            <div class="scale-container" style=" width: 300px;position: relative;">
+                <img class="" src="<%- `${food.photo.thumb}` %>" style="bottom:0;display:block;width:100%;">
+                <img src="/img/scale.png" style="display:block; width:100%;bottom:0;z-index: -1;">
+                <div style="text-align: center;">
+                    <% if (loggedin) { %>
+                        <button id="addFoodBtn" class="theme" onclick="addFoodToCurrentUser()">
+                            <ion-icon name="restaurant-outline"></ion-icon> Add food
+                        </button>
+                        <div style="opacity:0;" id="foodAddedNoti">Food added</div>
+                        <% } %>
+                </div>
             </div>
-            <% if (loggedin) { %>
-                <button onclick="addFoodToCurrentUser()">Add food</button>
-              <% } %>
-            <span style="opacity:0;" id="foodAddedNoti">Food added</span>
             <section class="nutrition-facts" style="overflow: hidden;">
 
                 <!-- <hr/>
@@ -222,6 +225,9 @@
 <script>
     var xhr = new XMLHttpRequest();
     const foodAddedNoti = document.getElementById("foodAddedNoti");
+    // const addFoodBtn = document.getElementById("addFoodBtn");
+    
+    // addFoodBtn.addEventListener("click", addFoodToCurrentUser)
     function addFoodToCurrentUser() {
         const foodInfo = {
             name:<%- `\"${food.food_name}\"` %>,
@@ -231,29 +237,28 @@
         };
         // //console.log(foodInfo)
         xhr.open("POST", "/add-food", true);
-        xhr.setRequestHeader("Content-type","application/json");
+        xhr.setRequestHeader("Content-type", "application/json");
         xhr.send(JSON.stringify(foodInfo));
 
         foodAddedNoti.classList.add("addNoti");
-        setTimeout(function(){ 
+        setTimeout(function () {
             foodAddedNoti.classList.remove("addNoti");
         }, 3000);
-         
+
     }
-</script>
-<script>
     $(document).ready(function () {
         const body = document.querySelector("#nav-menu");
-        if (<%- loggedin %>) {  
+        if (<%- loggedin %>) {
             // document.getElementById('account-settings').style.display = "inline-block";
-            $(".dropdown").css( "display", "inline-block");
+            $(".dropdown").css("display", "inline-block");
         } else {
             // document.getElementById('account-settings').style.display = "none";
-            $(".dropdown").css( "display", "none");
+            $(".dropdown").css("display", "none");
         }
     });
 </script>
 <script src="/load-footer.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+<script src="/global.js"></script>
 
 </html>
