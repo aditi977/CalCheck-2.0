@@ -73,7 +73,7 @@ async function registerUser(name, email, password) {
       if (err) throw err;
     });
   });
-
+  
 };
 
 async function loginUser(email, password) {

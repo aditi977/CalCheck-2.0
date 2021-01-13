@@ -226,7 +226,7 @@ app.post("/remove-food", authenticateToken, async (req, res, next) => {
     // res.redirect("/");
 })
 
-app.get("/", (req, res) => {
+app.get("/", authenticateToken, (req, res) => {
     res.render("index.ejs", { loggedin: isAuthenticated(req) })
 });
 
@@ -266,6 +266,6 @@ app.use((err, req, res, next) => {
 });
 
 const listener = app.listen(process.env.PORT || 3000, () => {
-    //console.log("Your app is listening on http://localhost:" + listener.address().port);
+    console.log("Your app is listening on http://localhost:" + listener.address().port);
 });
 
