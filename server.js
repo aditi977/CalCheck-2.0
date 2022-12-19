@@ -4,11 +4,11 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const { mongoose, registerUser, loginUser, addFoodToCurrentUser, getCurrentUser, removeFoodFromCurrentUser, changePassword, changePersonalInfo } = require("./backend/server")
+const { mongoose, registerUser, loginUser, addFoodToCurrentUser, getCurrentUser, removeFoodFromCurrentUser, changePassword, changePersonalInfo } = require("./backend/backend_funcs")
 const fetch = require("node-fetch");
 const session = require("express-session")
 const { URL, URLSearchParams } = require('url')
-const { UserSchema } = require("./backend/server");
+const { UserSchema } = require("./backend/backend_funcs");
 const cors = require("cors");
 const jwt = require('jsonwebtoken');
 
