@@ -2,7 +2,7 @@
   "name": "calcheck-2.0",
   "version": "1.0.0",
   "description": "",
-  "main": "middleware.js",
+  "main": "server.js",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
@@ -21,8 +21,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
-    "devStart": "nodemon backend/backend_funcs.js"
+    "start": "node server.js",
+    "devStart": "node backend/backend_funcs.js"
   },
   "repository": {
     "type": "git",
