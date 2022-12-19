@@ -14,12 +14,12 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 
 
+app.set('trust proxy', 1)
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(cors());
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    secret: "secret",
     resave: true,
     saveUninitialized: true,
     cookie: { maxAge: 600000 }
