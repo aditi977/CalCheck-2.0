@@ -11,8 +11,10 @@ const { URL, URLSearchParams } = require('url')
 const { UserSchema } = require("./backend/backend_funcs");
 const cors = require("cors");
 const jwt = require('jsonwebtoken');
+const path = require('path');
 
 
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(cors());
 app.use(session({
@@ -48,11 +50,11 @@ app.get('/test-mongoose', function (req, res) {
 
 //Remove this later, I'm lazy
 app.get("/index.html", (req, res) => {
-    res.render("index.ejs", { loggedin: isAuthenticated(req) })
+    res.render("index", { loggedin: isAuthenticated(req) })
 });
 
 app.get("/login", (req, res) => {
-    res.render("login.ejs");
+    res.render("login");
 });
 app.post("/user/register", (req, res) => {
     registerUser(req.body.name, req.body.email, req.body.password, []);
@@ -77,10 +79,10 @@ app.post("/user/login", async function (req, res, next) {
 
 });
 app.get("/suggestions", (req, res) => {
-    res.render("suggestions.ejs", { loggedin: isAuthenticated(req) });
+    res.render("suggestions", { loggedin: isAuthenticated(req) });
 });
 app.get("/single-item", (req, res) => {
-    res.render("single-item.ejs", { loggedin: isAuthenticated(req) });
+    res.render("single-item", { loggedin: isAuthenticated(req) });
 });
 app.get("/logout", (req, res) => {
     req.session.destroy();
@@ -111,7 +113,7 @@ app.get("/history", authenticateToken, async (req, res) => {
     //           `,
     //     })
     // };
-    res.render("history.ejs", { user:req.user ? await getCurrentUser(req.user.email):{}, loggedin: isAuthenticated(req) });
+    res.render("history", { user:req.user ? await getCurrentUser(req.user.email):{}, loggedin: isAuthenticated(req) });
 });
 app.get("/search", (req, res) => {
     let searchURL = new URL("https://trackapi.nutritionix.com/v2/search/instant");
@@ -127,7 +129,7 @@ app.get("/search", (req, res) => {
         }
     }).then(res => res.json())
         .then(data => {
-            res.render("post-search.ejs", { searchedFoods: data.common.concat(data.branded), loggedin: isAuthenticated(req) })
+            res.render("post-search", { searchedFoods: data.common.concat(data.branded), loggedin: isAuthenticated(req) })
         })
         .catch(err => res.send(err));
 
@@ -160,7 +162,7 @@ app.get("/food/name/:foodname", (req, res) => {
         .then(data => {
             const { full_nutrients, ...food } = data.foods[0]
             console.log(food)
-            res.render("single-item.ejs", { food, foodURL: `/food/id/${req.params.foodname}`, nfByCode: findNutrientsValue(full_nutrients), loggedin: isAuthenticated(req) })
+            res.render("single-item", { food, foodURL: `/food/id/${req.params.foodname}`, nfByCode: findNutrientsValue(full_nutrients), loggedin: isAuthenticated(req) })
         }
         )
         .catch(err => res.send(err));
@@ -181,7 +183,7 @@ app.get("/food/name/:foodname", (req, res) => {
         .then(data => {
             const { full_nutrients, ...food } = data.foods[0]
             console.log(food)
-            res.render("single-item.ejs", { food, foodURL: `/food/id/${req.params.id}`, nfByCode: findNutrientsValue(full_nutrients), loggedin: isAuthenticated(req) })
+            res.render("single-item", { food, foodURL: `/food/id/${req.params.id}`, nfByCode: findNutrientsValue(full_nutrients), loggedin: isAuthenticated(req) })
         }
         )
         .catch(err => res.send(err));
@@ -193,7 +195,7 @@ var Person = mongoose.model("Person", UserSchema)
 app.get('/account-settings', authenticateToken, async (req, res) => {
 
     const user = await Person.findOne({ email: req.user.email }).exec();
-    res.render("account-settings.ejs", user);
+    res.render("account-settings", user);
 
 })
 
@@ -227,7 +229,7 @@ app.post("/remove-food", authenticateToken, async (req, res, next) => {
 })
 
 app.get("/", authenticateToken, (req, res) => {
-    res.render("index.ejs", { loggedin: isAuthenticated(req) })
+    res.render("index", { loggedin: isAuthenticated(req) })
 });
 
 app.post("/user/change-password", authenticateToken, async (req, res) => {
@@ -265,8 +267,8 @@ app.use((err, req, res, next) => {
         .send(errMessage);
 });
 
-// const listener = app.listen(process.env.PORT || 3000, () => {
-//     console.log("Your app is listening on http://localhost:" + listener.address().port);
-// });
+const listener = app.listen(process.env.PORT || 3000, () => {
+    console.log("Your app is listening on http://localhost:" + listener.address().port);
+});
 
 module.exports = app
