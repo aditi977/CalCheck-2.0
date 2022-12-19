@@ -13,7 +13,7 @@ const cors = require("cors");
 const jwt = require('jsonwebtoken');
 
 
-app.set("view-engine", "ejs");
+app.set("view engine", "ejs");
 app.use(cors());
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -265,7 +265,8 @@ app.use((err, req, res, next) => {
         .send(errMessage);
 });
 
-const listener = app.listen(process.env.PORT || 3000, () => {
-    console.log("Your app is listening on http://localhost:" + listener.address().port);
-});
+// const listener = app.listen(process.env.PORT || 3000, () => {
+//     console.log("Your app is listening on http://localhost:" + listener.address().port);
+// });
 
+module.exports = app
