@@ -73,7 +73,6 @@ app.post("/user/login", async function (req, res, next) {
 
         res.redirect("/");
     } catch (err) {
-        // return err;
         next(err);
     }
 
@@ -113,7 +112,7 @@ app.get("/history", authenticateToken, async (req, res) => {
     //           `,
     //     })
     // };
-    res.render("history", { user:req.user ? await getCurrentUser(req.user.email):{}, loggedin: isAuthenticated(req) });
+    res.render("history", { user: req.user ? await getCurrentUser(req.user.email) : {}, loggedin: isAuthenticated(req) });
 });
 app.get("/search", (req, res) => {
     let searchURL = new URL("https://trackapi.nutritionix.com/v2/search/instant");
@@ -166,20 +165,20 @@ app.get("/food/name/:foodname", (req, res) => {
         }
         )
         .catch(err => res.send(err));
-    })
-    
-    
-    app.get("/food/id/:id", (req, res) => {
-        
-        fetch(`https://trackapi.nutritionix.com/v2/search/item?nix_item_id=${req.params.id}`, {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                "x-app-id": "dc50e0ed",
-                "x-app-key": "e4ba8175f2f600d999e22b205a8e402c"
-            }
-        }).then(res => res.json())
+})
+
+
+app.get("/food/id/:id", (req, res) => {
+
+    fetch(`https://trackapi.nutritionix.com/v2/search/item?nix_item_id=${req.params.id}`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            "x-app-id": "dc50e0ed",
+            "x-app-key": "e4ba8175f2f600d999e22b205a8e402c"
+        }
+    }).then(res => res.json())
         .then(data => {
             const { full_nutrients, ...food } = data.foods[0]
             console.log(food)
@@ -203,7 +202,7 @@ app.get('/account-settings', authenticateToken, async (req, res) => {
 function authenticateToken(req, res, next) {
     const authHeader = req.session.autho;
     const token = authHeader && authHeader.split(' ')[1];
-    console.log(authHeader)
+    // console.log(authHeader)
     if (token == null) {
         req.errorCode = 401;
         return next();

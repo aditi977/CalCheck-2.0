@@ -6,6 +6,7 @@ const saltRounds = 10;
 
 
 const dotenv = require("dotenv");
+const { resolveObject } = require("url");
 dotenv.config();
 
 mongoose.connect(process.env.MONGO_URI, {
@@ -73,26 +74,29 @@ async function registerUser(name, email, password) {
       if (err) throw err;
     });
   });
-  
+
 };
 
 async function loginUser(email, password) {
   const user = await Person.findOne({
     email: email
   }).exec();
+
+  if (user == null) {
+    throw new Error("Invalid authentication");
+  }
   // var pw_encoded = jwt.encode(password, process.env.SECRET_ENCRYPT);
   var hash = user.password;
-  bcrypt.compare(password, hash, function(err, result) {
-    if (err) throw err;
-    if (result) {
-      return user._id;
-    }else{
-      throw new Error("Invalid authentication");
-    }
-  });
-  
+  const match = await bcrypt.compare(password, hash);
+  if (match) {
+    return user._id;
+  }
+  else {
+    throw new Error("Invalid authentication");
+  }
 
-  
+
+
 }
 
 //might need id instead of email
